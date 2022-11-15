@@ -1,0 +1,128 @@
+﻿@model IEnumerable<CRM.Models.Contacto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Contactos</h1>
+
+<p>
+    <a asp-controller="Contacto" asp-action="Create" class="btn btn-success">Registrar un nuevo contacto</a>
+    <a asp-controller="VContactosInfoGeneral" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <div>
+        <a class="dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filtrar contactos por cliente
+          </button>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (Contacto item in Model) {
+                <li>
+                    <a class="dropdown-item" asp-controller="VContactosInfoGeneral" asp-action="Filtrar" asp-route-id="@item.CedulaCliente">
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula) | 
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Nombre)
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Apellido1)
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Apellido2)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</p>
+
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaCliente1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DireccionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdZonaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoContactoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaUsuarioNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DireccionNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdZonaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoContactoNavigation.Id)
+            </td>
+            <td>
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Detalles</a>
+                <a asp-controller="Contacto" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

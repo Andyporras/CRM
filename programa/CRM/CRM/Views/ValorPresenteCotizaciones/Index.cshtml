@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CRM.Models.ValorPresenteCotizacione>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Valor presente de las cotizaciones</h1>
+
+<p>
+    <a asp-action="calcularInflacion" class="btn btn-success">Calcular inflacion</a>
+    <a asp-controller="Inflacion" asp-action="Index" class="btn btn-success">Registro de inflación</a>
+    <a asp-action="borrarRegistros" class="btn btn-danger">Borrar registros</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroContacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreOportunidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCuenta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAValorPresente)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.NumeroContacto" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.NumeroContacto)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreOportunidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCuenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAValorPresente)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

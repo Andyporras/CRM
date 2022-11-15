@@ -1,0 +1,138 @@
+﻿@model IEnumerable<CRM.Models.VCotizacionInfoGeneral>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cotizaciones</h1>
+<p>
+    <a asp-controller="Cotizacion" asp-action="Create" class="btn btn-success">Agregar nueva cotización</a>
+    <a asp-controller="Cotizacion" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdContacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreOportunidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCuenta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaProyeccionCierre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCierre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdenCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etapa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Asesor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Probabilidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competidor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+            </td>
+            <td>
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.IdContacto" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.IdContacto)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreOportunidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCuenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaProyeccionCierre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCierre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrdenCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sector)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asesor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Probabilidad)%
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Competidor)
+            </td>
+            <td>
+                <a asp-controller="Cotizacion" asp-action="Edit" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-primary">Modificar</a>
+                <a asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-secondary">Detales</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

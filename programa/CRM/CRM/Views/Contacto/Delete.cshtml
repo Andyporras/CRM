@@ -1,0 +1,108 @@
+﻿@model CRM.Models.Contacto
+
+@{
+    ViewData["Title"] = "Delete";
+    Cliente cliente = (Cliente)ViewData["Cliente"];
+    Usuario usuario = (Usuario)ViewData["Usuario"];
+    Provincium provincia = (Provincium)ViewData["Provincia"];
+    Canton canton = (Canton)ViewData["Canton"];
+    Distrito distrito = (Distrito)ViewData["Distrito"];
+    Zona zona = (Zona)ViewData["Zona"];
+    Sector sector = (Sector)ViewData["Sector"];
+    TipoContacto tipoContacto = (TipoContacto)ViewData["TipoContacto"];
+    Estado estado = (Estado)ViewData["Estado"];
+}
+
+<h1>Eliminar contacto</h1>
+
+<h4>¿Estás seguro/a que deseas eliminar este contacto?</h4>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Motivo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Motivo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorreoElectronico)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorreoElectronico)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CedulaCliente1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CedulaCliente1.CedulaCliente)
+            @cliente.Cedula (@cliente.Nombre @cliente.Apellido1 @cliente.Apellido2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CedulaUsuarioNavigation.Cedula)
+            (@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DireccionNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DireccionNavigation.Id)
+            (@provincia.Nombre, @canton.Nombre, @distrito.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EstadoNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @estado.Nombre
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdSectorNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdSectorNavigation.Id)
+            (@sector.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdZonaNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdZonaNavigation.Id)
+            (@zona.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoContactoNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TipoContactoNavigation.Id)
+            (@tipoContacto.Tipo)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CedulaCliente" />
+        <input type="submit" value="Eliminar contacto" class="btn btn-danger" /> |
+        <a asp-action="Index">Ver todos los contactos</a>
+    </form>
+</div>
