@@ -1186,7 +1186,7 @@ INSERT INTO Etapa VALUES
   ('etapa2'),
   ('etapa3'),
   ('etapa4'),
-  ('etapa5');
+  ('Facturada');
 
 -- Insercciones de datos en la tabla de EstadoCaso
 INSERT INTO EstadoCaso VALUES
@@ -1397,22 +1397,22 @@ END
 estado, descripcion */
 INSERT INTO Producto VALUES
   (1, 1, 'Refrigerador', 1000, 1, 'Refrigerador de 2 puertas'),
-  (2, 1, 'Lavadora', 1000, 1, 'Lavadora de 2 puertas'),
-  (3, 1, 'Secadora', 1000, 1, 'Secadora de 2 puertas'),
-  (4, 1, 'Estufa', 1000, 1, 'Estufa de 2 puertas'),
+  (2, 2, 'Lavadora', 1000, 1, 'Lavadora de 2 puertas'),
+  (3, 3, 'Secadora', 1000, 1, 'Secadora de 2 puertas'),
+  (4, 4, 'Estufa', 1000, 1, 'Estufa de 2 puertas'),
   (5, 1, 'Microondas', 1000, 1, 'Microondas de 2 puertas'),
   (6, 1, 'Licuadora', 1000, 1, 'Licuadora de 2 puertas'),
   (7, 1, 'Batidora', 1000, 1, 'Batidora de 2 puertas'),
-  (8, 1, 'Aspiradora', 1000, 1, 'Aspiradora de 2 puertas'),
+  (8, 6, 'Aspiradora', 1000, 1, 'Aspiradora de 2 puertas'),
   (9, 1, 'Cafetera', 1000, 1, 'Cafetera de 2 puertas'),
   (10, 1, 'Horno', 1000, 1, 'Horno de 2 puertas'),
   (11, 1, 'Televisor', 1000, 1, 'Televisor de 2 puertas'),
-  (12, 1, 'Radio', 1000, 1, 'Radio de 2 puertas'),
+  (12, 7, 'Radio', 1000, 1, 'Radio de 2 puertas'),
   (13, 1, 'DVD', 1000, 1, 'DVD de 2 puertas'),
   (14, 1, 'Videocasetera', 1000, 1, 'Videocasetera de 2 puertas'),
-  (15, 1, 'Videojuego', 1000, 1, 'Videojuego de 2 puertas'),
+  (15, 10, 'Videojuego', 1000, 1, 'Videojuego de 2 puertas'),
   (16, 1, 'Computadora', 1000, 1, 'Computadora de 2 puertas'),
-  (17, 1, 'Impresora', 1000, 1, 'Impresora de 2 puertas');
+  (17, 10, 'Impresora', 1000, 1, 'Impresora de 2 puertas');
 
   
 
