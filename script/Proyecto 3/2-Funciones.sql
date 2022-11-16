@@ -17,11 +17,152 @@ RETURN
 		INNER JOIN Familia fa ON proxcoti.Familia = fa.nombre
 			WHERE ve.fecha_cierre >= @fechaInicio AND ve.fecha_cierre <= @fechaFin
 		GROUP BY proxcoti.Familia
-		ORDER BY Monto DESC
 )
 GO
 
 
+/*
+Función que filtra por rango de fecha las/el Top 10 de productos más cotizados. Descripción y cantidad.
+*/
+DROP FUNCTION IF EXISTS fProductosMasCotizados
+GO
+CREATE FUNCTION fProductosMasCotizados(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP(10) pro.descripcion, COUNT(proxcoti.codigo_producto) AS cantidad_cotizaciones
+	FROM Cotizacion coti, ProductoCotizacion proxcoti
+		INNER JOIN Producto pro ON proxcoti.codigo_producto = pro.codigo
+			WHERE coti.fecha_cotizacion >= @fechaInicio AND coti.fecha_cotizacion <= @fechaFin
+	GROUP BY proxcoti.codigo_producto, pro.descripcion
+	ORDER BY cantidad_cotizaciones DESC
+	)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Ventas por zona. Descripción y monto. Gráfico circular.
+*/
+DROP FUNCTION IF EXISTS fVentasPorZona
+GO
+CREATE FUNCTION fVentasPorZona(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+		SELECT ve.descripcion, (SELECT dbo.fMontoCotizacion(ve.numero_cotizacion)) AS monto
+		FROM vVentas ve, zona zo
+			WHERE ve.id_zona = zo.id AND
+				 (ve.fecha_cierre >= @fechaInicio OR ve.fecha_cierre <= @fechaFin)
+		)
+GO
+
+/*
+Función que filtra por rango de fecha las/el Ventas por departamento. Gráfico circular (porcentual).
+*/
+DROP FUNCTION IF EXISTS fPorcentajeVentasPorDepartamento
+GO
+CREATE FUNCTION fPorcentajeVentasPorDepartamento(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+	RETURN (
+			SELECT dep.nombre AS departamento, (COUNT(dep.nombre) * 100 / (
+			SELECT COUNT(*) FROM vCantidadVentasPorDepartamento)) AS porcentaje
+			FROM vVentas coti
+				INNER JOIN Usuario u ON u.cedula = coti.id_asesor
+				INNER JOIN Departamento dep ON dep.id = u.id_departamento
+				WHERE coti.fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
+			GROUP BY dep.nombre
+	)
+GO
+
+
+/*
+
+/*
+Función que filtra por rango de fecha las/el  Ventas y cotizaciones por mes, por año, en valor presente. Gráfico de barras.
+*/
+DROP FUNCTION IF EXISTS fCotizacionesValorPresente
+GO
+CREATE FUNCTION fCotizacionesValorPresente(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Cantidad de contactos de cliente por usuario.
+*/
+DROP FUNCTION IF EXISTS fTotalContactoClientesPorUsuario
+GO
+CREATE FUNCTION fTotalContactoClientesPorUsuario(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Cantidad de Ejecuciones con cierre por mes, por año.
+*/
+DROP FUNCTION IF EXISTS fTotalEjecucionesConCierre
+GO
+CREATE FUNCTION fTotalEjecucionesConCierre(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Top 10 de cotizaciones con más actividades y tareas (sumadas juntas).
+*/
+DROP FUNCTION IF EXISTS fCotizacionesConMasActividades
+GO
+CREATE FUNCTION fCotizacionesConMasActividades(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Cantidad de cotizaciones por tipo. Gráfico circular.
+*/
+DROP FUNCTION IF EXISTS fCantidadCotizacionesPorTipo
+GO
+CREATE FUNCTION fCantidadCotizacionesPorTipo(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+/*
+Función que filtra por rango de fecha las/el Casos por tipo (porcentual). Gráfico circular
+*/
+DROP FUNCTION IF EXISTS fCasosPorTipo
+GO
+CREATE FUNCTION fCasosPorTipo(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+--consultaSql
+)
+GO
+
+
+*/
 
 
 
