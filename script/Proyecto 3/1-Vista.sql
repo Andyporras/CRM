@@ -50,17 +50,33 @@ CREATE VIEW vPorcentajeVentasPorDepartamento AS
 	FROM vCantidadVentasPorDepartamento
 GO
 
-/*
 
 /*
  Ventas y cotizaciones por mes, por año, en valor presente. Gráfico de barras.
 */
-DROP VIEW IF EXISTS vCotizacionesValorPresente
+DROP VIEW IF EXISTS vCotizacionesValorPresentePorMes
 GO
-CREATE VIEW CotizacionesValorPresente AS
-     --consultaSQL
+CREATE VIEW vCotizacionesValorPresentePorMes AS
+      SELECT mes.nombre AS Mes,
+			 SUM(dbo.fValorPresenteMontoCotizacion(coti.numero_cotizacion)) AS Monto_cotizaciones
+	 FROM Cotizacion coti, mes
+		WHERE mes.id = MONTH(coti.fecha_cotizacion)
+	 GROUP BY mes.nombre
 GO
 
+DROP VIEW IF EXISTS vVentasValorPresentePorMes
+GO
+CREATE VIEW vVentasValorPresentePorMes AS
+     SELECT mes.nombre AS Mes,
+			 SUM(dbo.fValorPresenteMontoCotizacion(ve.numero_cotizacion)) AS Monto_ventas
+	 FROM vVentas ve, mes
+		WHERE mes.id = MONTH(ve.fecha_cotizacion)
+	 GROUP BY mes.nombre
+GO
+
+SELECT * FROM vVentasValorPresentePorMes
+select * from vCotizacionesValorPresentePorMes
+/*
 
 /*
 Cantidad de contactos de cliente por usuario.
