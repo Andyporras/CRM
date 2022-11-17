@@ -155,4 +155,78 @@ GO
 
 
 
+-- Productos vendidos. Descripcion y monto.
+DROP VIEW IF EXISTS vProductosMasVendidos
+GO
+CREATE VIEW vProductosMasVendidos AS
+SELECT TOP 10 p.Descripcion, SUM(p.precio_estandar) AS Monto
+FROM ProductoCotizacion pc
+INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+GROUP BY p.Descripcion, p.nombre, p.precio_estandar
+GO
+
+--Ventas por sector. Descripcion y monto.
+DROP VIEW IF EXISTS vVentasPorSector
+GO
+CREATE VIEW vVentasPorSector AS
+SELECT p.Descripcion, SUM(p.precio_estandar) AS Monto
+FROM ProductoCotizacion pc
+INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+INNER JOIN Sector s ON s.id = v.id_sector
+GROUP BY p.descripcion
+--ORDER BY Monto DESC
+GO
+
+/*
+Cotizaciones y Ventas por departamento. Comparativo. Gráfico de barras. se debe sacar el departamento del usuario
+*/
+DROP VIEW IF EXISTS vCotizacionYVentasDepartamento
+GO
+CREATE VIEW CotizacionYVentasDepartamento AS
+SELECT d.nombre AS Departamento, COUNT(cd.departamento) AS Cotizaciones, COUNT(VD.departamento) AS Ventas
+FROM Departamento d
+LEFT JOIN vCantidadCotizacionesPorDepartamento CD ON d.nombre = CD.departamento
+LEFT JOIN vCantidadVentasPorDepartamento VD ON d.nombre = VD.departamento
+GROUP BY d.nombre
+GO
+
+/*
+Ventas y cotizaciones por mes. Gráfico de barras.
+*/
+DROP VIEW IF EXISTS vVentasYCotizavionPorMes
+GO
+CREATE VIEW vVentasYCotizavionPorMes AS
+SELECT MONTH(v.fecha_cotizacion) AS Mes, COUNT(v.fecha_cierre) AS Ventas, COUNT(c.numero_cotizacion) AS Cotizaciones
+FROM vVentas v
+FULL JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion
+GROUP BY MONTH(v.fecha_cierre)
+GO
+
+/*
+Ventas y cotizaciones por año. Gráfico de barras.
+*/
+DROP VIEW IF EXISTS vVentasYCotizavionPorAño
+GO
+CREATE VIEW vVentasYCotizavionPorAño AS
+SELECT YEAR(v.fecha_cierre) AS Año, COUNT(v.fecha_cierre) AS Ventas, COUNT(c.numero_cotizacion) AS Cotizaciones
+FROM vVentas v
+FULL JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion
+GROUP BY YEAR(v.fecha_cierre)
+GO
+
+/*
+ Top 10 de clientes con mayores ventas.
+*/
+DROP VIEW IF EXISTS vTop10ClientesMayorVentas
+GO
+CREATE VIEW vTop10ClientesMayorVentas AS
+SELECT TOP 10 c.nombre as nombre, (SELECT dbo.fMontoCotizacion(v.numero_cotizacion)) AS Monto
+FROM vVentas v
+INNER JOIN vClienteCuentaCliente c ON c.nombre_cuenta = v.nombre_cuenta
+--GROUP BY c.nombre
+--ORDER BY Monto DESC
+GO
+
+
 

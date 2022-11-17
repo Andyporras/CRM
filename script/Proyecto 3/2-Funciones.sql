@@ -210,3 +210,95 @@ GO
 
 
 -- Andy 👇🏻
+
+
+-- Funcion que filtre los productos mas vendidos por fecha
+
+DROP FUNCTION IF EXISTS fProductosMasVendidos
+GO
+CREATE FUNCTION fProductosMasVendidos(@fechaInicio DATETIME, @fechaFin DATETIME)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP 10 p.Descripcion, SUM(p.precio_estandar) AS Monto
+	FROM ProductoCotizacion pc
+	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+		WHERE v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin
+	GROUP BY p.Descripcion, p.nombre, p.precio_estandar
+	ORDER BY Monto DESC
+)
+GO
+
+-- Funcion que filtre las ventas por sector por fecha
+
+DROP FUNCTION IF EXISTS fVentasPorSector
+GO
+CREATE FUNCTION fVentasPorSector(@fechaInicio DATETIME, @fechaFin DATETIME)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT p.Descripcion, SUM(p.precio_estandar) AS Monto
+	FROM ProductoCotizacion pc
+	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+	INNER JOIN Sector s ON s.id = V.id_sector
+		WHERE v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin
+	GROUP BY p.descripcion
+	--ORDER BY Monto DESC
+)
+GO
+
+/*
+Función que filtra por rango de fecha las/el Cotizaciones y Ventas por departamento. Comparativo. Gráfico de barras.
+*/
+DROP FUNCTION IF EXISTS fCotizacionYVentasDepartamento
+GO
+CREATE FUNCTION fCotizacionYVentasDepartamento(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT dep.nombre AS departamento, COUNT(dep.nombre) AS cantidad
+	FROM vVentas coti
+		INNER JOIN Usuario u ON u.cedula = coti.id_asesor
+		INNER JOIN Departamento dep ON dep.id = u.id_departamento
+		WHERE coti.fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
+	GROUP BY dep.nombre
+)
+GO
+
+/*
+Función que filtra por rango de fecha las/el Ventas y cotizaciones por mes. Gráfico de barras.
+*/
+DROP FUNCTION IF EXISTS fVentasYCotizavionPorMes
+GO
+CREATE FUNCTION fVentasYCotizavionPorMes(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT MONTH(fecha_cierre) AS mes, COUNT(MONTH(fecha_cierre)) AS cantidad
+	FROM vVentas
+		WHERE fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
+	GROUP BY MONTH(fecha_cierre)
+)
+GO
+
+/*
+Función que filtra por rango de fecha las/el  Top 10 de clientes con mayores ventas.
+*/
+DROP FUNCTION IF EXISTS fTop10ClientesMayorVentas
+GO
+CREATE FUNCTION fTop10ClientesMayorVentas(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP 10 cc.nombre nombre, SUM(p.precio_estandar) AS Monto
+	FROM ProductoCotizacion pc
+	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+	INNER JOIN vClienteCuentaCliente cc ON cc.nombre_cuenta = v.nombre_cuenta
+		WHERE v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin
+	GROUP BY cc.nombre
+	ORDER BY Monto DESC
+)
+GO

@@ -129,3 +129,14 @@ INSERT into mes values
 		(10, 'Octubre'),
 		(11, 'Noviembre'),
 		(12, 'Diciembre')
+
+
+/* Vista que muestra los datos de los cliente como de su cuentaCliente
+*/
+DROP VIEW IF EXISTS vClienteCuentaCliente
+GO
+CREATE VIEW vClienteCuentaCliente AS
+SELECT c.cedula, c.nombre, c.apellido1,c.apellido2, c.telefono, c.celular,cc.id AS id_cuenta_cliente, cc.cedula_cliente, cc.moneda, cc.id_sector, cc.nombre_cuenta
+FROM Cliente c
+INNER JOIN CuentaCliente cc ON c.cedula = cc.cedula_cliente
+GO
