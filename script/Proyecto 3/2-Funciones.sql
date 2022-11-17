@@ -302,3 +302,24 @@ RETURN (
 	ORDER BY Monto DESC
 )
 GO
+
+/*
+Función que filtra por rango de fecha las/el Top 10 de vendedores con mayores ventas. Nombre y monto
+*/
+DROP FUNCTION IF EXISTS fTop10VendedoresMayorVentas
+GO
+CREATE FUNCTION fTop10VendedoresMayorVentas(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP 10 u.nombre, SUM(p.precio_estandar) AS Monto
+	FROM ProductoCotizacion pc
+	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+	INNER JOIN Usuario u ON u.cedula = v.id_asesor
+		WHERE v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin
+	GROUP BY u.nombre
+	ORDER BY Monto DESC
+)
+GO
+

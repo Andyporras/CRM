@@ -228,5 +228,17 @@ INNER JOIN vClienteCuentaCliente c ON c.nombre_cuenta = v.nombre_cuenta
 --ORDER BY Monto DESC
 GO
 
+/*
+Top 10 de vendedores con mayores ventas. Nombre y monto
+*/
+DROP VIEW IF EXISTS vTop10VendedoresMayorVentas
+GO
+CREATE VIEW vTop10VendedoresMayorVentas AS
+SELECT TOP 10 u.nombre, SUM(dbo.fMontoCotizacion(v.numero_cotizacion)) AS Monto
+FROM vVentas v
+INNER JOIN Usuario u ON u.cedula = v.id_asesor
+GROUP BY u.nombre
+ORDER BY Monto DESC
+GO
 
-
+select *from vTop10VendedoresMayorVentas
