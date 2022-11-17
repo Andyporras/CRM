@@ -192,4 +192,14 @@ FROM Caso c
 INNER JOIN Ejecucion e ON c.nombreCuenta = e.nombreCuenta
 GO
 
-select *from vCasosEjecucion
+/* Vista que muestra los datos de las Tareas y los estadoTarea
+*/
+DROP VIEW IF EXISTS vTareasEstadoTarea
+GO
+CREATE VIEW vTareasEstadoTarea AS
+SELECT t.id, t.descripcion, t.fecha_creacion, t.fecha_finalizacion,t.estado, et.id AS id_estado_tarea,et.nombre AS nombre_estado_tarea
+FROM Tarea t
+INNER JOIN EstadoTarea et ON t.estado = et.id
+GO
+
+select *from vTareasEstadoTarea

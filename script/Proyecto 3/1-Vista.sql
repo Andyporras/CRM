@@ -291,4 +291,16 @@ INNER JOIN vClienteCuentaCliente CC ON CC.nombre_cuenta = c.nombre_cuenta
 ORDER BY Diferencia DESC
 GO
 
-select *from vTop10CotizacionDiferenciaMasAlto
+/*
+Top 15 de tareas sin cerrar más antiguas.
+*/
+DROP VIEW IF EXISTS vTop15TareasSinCerrarMasAntiguias
+GO
+CREATE VIEW vTop15TareasSinCerrarMasAntiguias AS
+SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion, t.nombre_estado_tarea
+FROM vTareasEstadoTarea t
+WHERE t.estado != 3
+ORDER BY t.fecha_creacion ASC
+GO
+
+select *from vTop15TareasSinCerrarMasAntiguias

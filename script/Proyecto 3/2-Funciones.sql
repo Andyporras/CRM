@@ -376,3 +376,19 @@ RETURN (
 )
 GO
 
+/*
+Función que filtra por rango de fecha las/el Top 15 de tareas sin cerrar más antiguas.
+*/
+DROP FUNCTION IF EXISTS fTop15TareasSinCerrarMasAntiguias
+GO
+CREATE FUNCTION fTop15TareasSinCerrarMasAntiguias(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion
+	FROM Tarea t
+		WHERE t.fecha_finalizacion IS NULL AND t.fecha_creacion >= @fechaInicio AND t.fecha_finalizacion <= @fechaFin
+	ORDER BY t.fecha_creacion ASC
+)
+GO
+
