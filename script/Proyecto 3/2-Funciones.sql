@@ -76,20 +76,59 @@ AS
 GO
 
 
-/*
 
 /*
 Función que filtra por rango de fecha las/el  Ventas y cotizaciones por mes, por año, en valor presente. Gráfico de barras.
 */
-DROP FUNCTION IF EXISTS fCotizacionesValorPresente
+-- Función que filtra las cotizaciones con valor presente por mes específico
+DROP FUNCTION IF EXISTS fCotizacionesValorPresentePorMes
 GO
-CREATE FUNCTION fCotizacionesValorPresente(@fechaInicio DATE, @fechaFin DATE)
+CREATE FUNCTION fCotizacionesValorPresentePorMes(@mes VARCHAR(20))
 RETURNS TABLE
 AS
 RETURN (
---consultaSql
+	SELECT * FROM vCotizacionesValorPresentePorMes ve
+		WHERE ve.Mes = @mes
 )
 GO
+
+-- Función que filtra las ventas con valor presente por mes específico
+DROP FUNCTION IF EXISTS fVentasValorPresentePorMes
+GO
+CREATE FUNCTION fVentasValorPresentePorMes(@mes VARCHAR(20))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT * FROM vVentasValorPresentePorMes ve
+		WHERE ve.Mes = @mes
+)
+GO
+
+-- Función que filtra las cotizaciones con valor presente por año específico
+DROP FUNCTION IF EXISTS fCotizacionesValorPresentePorAnno
+GO
+CREATE FUNCTION fCotizacionesValorPresentePorAnno(@anno VARCHAR(20))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT * FROM vCotizacionesValorPresentePorAnno coti
+		WHERE coti.Año = @anno
+)
+GO
+
+-- Función que filtra las ventas con valor presente por mes específico
+DROP FUNCTION IF EXISTS fVentasValorPresentePorAnno
+GO
+CREATE FUNCTION fVentasValorPresentePorAnno(@anno VARCHAR(20))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT * FROM vVentasValorPresentePorAnno ve
+		WHERE ve.Año = @anno
+)
+GO
+
+/*
 
 
 /*

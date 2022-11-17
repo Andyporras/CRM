@@ -54,6 +54,7 @@ GO
 /*
  Ventas y cotizaciones por mes, por año, en valor presente. Gráfico de barras.
 */
+-- CotizacIones valor presente por mes
 DROP VIEW IF EXISTS vCotizacionesValorPresentePorMes
 GO
 CREATE VIEW vCotizacionesValorPresentePorMes AS
@@ -64,6 +65,7 @@ CREATE VIEW vCotizacionesValorPresentePorMes AS
 	 GROUP BY mes.nombre
 GO
 
+-- Ventas valor presente por mes
 DROP VIEW IF EXISTS vVentasValorPresentePorMes
 GO
 CREATE VIEW vVentasValorPresentePorMes AS
@@ -74,8 +76,26 @@ CREATE VIEW vVentasValorPresentePorMes AS
 	 GROUP BY mes.nombre
 GO
 
-SELECT * FROM vVentasValorPresentePorMes
-select * from vCotizacionesValorPresentePorMes
+-- Cotizaciones valor presente por año
+DROP VIEW IF EXISTS vCotizacionesValorPresentePorAnno
+GO
+CREATE VIEW vCotizacionesValorPresentePorAnno AS
+	SELECT YEAR(coti.fecha_cotizacion) AS Año,
+		   SUM(dbo.fValorPresenteMontoCotizacion(coti.numero_cotizacion)) AS Monto_cotizaciones
+	FROM Cotizacion coti
+	GROUP BY YEAR(coti.fecha_cotizacion)
+GO
+
+-- Ventas valor presente por año
+DROP VIEW IF EXISTS vVentasValorPresentePorAnno
+GO
+CREATE VIEW vVentasValorPresentePorAnno AS
+	SELECT YEAR(ve.fecha_cotizacion) AS Año,
+		   SUM(dbo.fValorPresenteMontoCotizacion(ve.numero_cotizacion)) AS Monto_Ventas
+	FROM vVentas ve
+	GROUP BY YEAR(ve.fecha_cotizacion)
+GO
+
 /*
 
 /*
