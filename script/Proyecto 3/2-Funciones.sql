@@ -338,3 +338,24 @@ RETURN (
 	GROUP BY e.nombre
 )
 GO
+
+/*
+Función que filtra por rango de fecha las/el Cantidad de clientes por zona y monto ventas por zona. Zona, cantidad y monto.
+*/
+DROP FUNCTION IF EXISTS fCantidadClientesPorZonaYMonto
+GO
+CREATE FUNCTION fCantidadClientesPorZonaYMonto(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT z.nombre, COUNT(z.nombre) AS cantidad, SUM(p.precio_estandar) AS Monto
+	FROM ProductoCotizacion pc
+	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
+	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
+	INNER JOIN vClienteCuentaCliente cc ON cc.nombre_cuenta = v.nombre_cuenta
+	INNER JOIN Zona z ON z.id = cc.id_zona
+		WHERE v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin
+	GROUP BY z.nombre
+)
+GO
+

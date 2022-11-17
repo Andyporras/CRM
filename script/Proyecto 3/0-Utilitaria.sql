@@ -136,7 +136,7 @@ INSERT into mes values
 DROP VIEW IF EXISTS vClienteCuentaCliente
 GO
 CREATE VIEW vClienteCuentaCliente AS
-SELECT c.cedula, c.nombre, c.apellido1,c.apellido2, c.telefono, c.celular,cc.id AS id_cuenta_cliente, cc.cedula_cliente, cc.moneda, cc.id_sector, cc.nombre_cuenta
+SELECT c.cedula, c.nombre, c.apellido1,c.apellido2, c.telefono, c.celular,cc.id AS id_cuenta_cliente, cc.cedula_cliente, cc.moneda, cc.id_sector, cc.nombre_cuenta,cc.id_zona
 FROM Cliente c
 INNER JOIN CuentaCliente cc ON c.cedula = cc.cedula_cliente
 GO

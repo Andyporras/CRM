@@ -266,6 +266,17 @@ LEFT JOIN Caso c ON e.id = c.id_estado
 GROUP BY e.nombre
 GO
 
-select *from vCasosPorEstado
+/*
+Cantidad de clientes por zona y monto ventas por zona. Zona, cantidad y monto.
+*/
+DROP VIEW IF EXISTS vCantidadClientesPorZonaYMonto
+GO
+CREATE VIEW vCantidadClientesPorZonaYMonto AS
+SELECT z.nombre as zona, COUNT(c.nombre_cuenta) AS Cantidad, SUM(dbo.fMontoCotizacion(v.numero_cotizacion)) AS Monto
+FROM Zona z
+LEFT JOIN vClienteCuentaCliente c ON c.id_zona = z.id
+LEFT JOIN vVentas v ON v.nombre_cuenta = c.nombre_cuenta
+GROUP BY z.nombre
+GO
 
-select *from vTop10VendedoresMayorVentas
+select *from vCantidadClientesPorZonaYMonto
