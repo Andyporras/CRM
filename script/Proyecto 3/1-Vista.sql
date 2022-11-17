@@ -279,4 +279,16 @@ LEFT JOIN vVentas v ON v.nombre_cuenta = c.nombre_cuenta
 GROUP BY z.nombre
 GO
 
-select *from vCantidadClientesPorZonaYMonto
+/*
+Top 10 de cotizaciones con diferencia entre creación y cierre más altos (cotización, cliente y cantidad de días de diferencia).
+*/
+DROP VIEW IF EXISTS vTop10CotizacionDiferenciaMasAlto
+GO
+CREATE VIEW vTop10CotizacionDiferenciaMasAlto AS
+SELECT TOP 10 c.numero_cotizacion,CC.nombre , DATEDIFF(DAY, c.fecha_cotizacion, c.fecha_cierre) AS Diferencia
+FROM Cotizacion c
+INNER JOIN vClienteCuentaCliente CC ON CC.nombre_cuenta = c.nombre_cuenta
+ORDER BY Diferencia DESC
+GO
+
+select *from vTop10CotizacionDiferenciaMasAlto

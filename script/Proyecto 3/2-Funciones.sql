@@ -359,3 +359,20 @@ RETURN (
 )
 GO
 
+/*
+Función que filtra por rango de fecha las/el Top 10 de cotizaciones con diferencia entre creación y cierre más altos (cotización, cliente y cantidad de días de diferencia).
+*/
+DROP FUNCTION IF EXISTS fTop10CotizacionDiferenciaMasAlto
+GO
+CREATE FUNCTION fTop10CotizacionDiferenciaMasAlto(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT TOP 10 c.numero_cotizacion, cc.nombre, DATEDIFF(day, c.fecha_cotizacion, c.fecha_cierre) AS diferencia
+	FROM cotizacion c
+	INNER JOIN vClienteCuentaCliente cc ON cc.nombre_cuenta = c.nombre_cuenta
+		WHERE c.fecha_cierre >= @fechaInicio AND c.fecha_cierre <= @fechaFin
+	ORDER BY diferencia DESC
+)
+GO
+
