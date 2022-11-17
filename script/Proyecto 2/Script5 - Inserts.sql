@@ -2,8 +2,10 @@ USE CRM
 GO
 
 -- eliminacion de los datos de la tabla
-DELETE FROM ValorPresenteCotizaciones
+DELETE FROM tipoCotizacion
+DELETE FROM CotizacionTarea
 DELETE FROM CasosActividad
+DELETE FROM ValorPresenteCotizaciones
 DELETE FROM CasosTarea
 DELETE FROM ContactoTarea
 DELETE FROM ContactoActividad
@@ -21,7 +23,6 @@ DELETE FROM Actividad
 DELETE FROM Canton
 DELETE FROM Cliente
 DELETE FROM Competidor
-DELETE FROM CotizacionTarea
 DELETE FROM UsuarioRoles
 DELETE FROM Usuario
 DELETE FROM Departamento
@@ -1501,6 +1502,15 @@ BEGIN
 END
 
 
+INSERT INTO tipoCotizacion VALUES
+  (1, 'Cotizacion'),
+  (2, 'Presupuesto'),
+  (3, 'Pedido'),
+  (4, 'Factura'),
+  (5, 'Nota de Credito'),
+  (6, 'Nota de Debito')
+
+
 /* Insercciones de Cotizacion con numero_cotizacion, id_factura, id_contacto de los existente, tipo, nombre_oportunidad, fecha_cotizacion,
 nombre_cuenta de los existente en cotizacion, fecha_proyecccion_cierre, fecha_cierre, orden_compra, descripcion, precio_negociodo, 
 id_zona de los existente, id_sector de los existente, id_etapa de los existente, id_moneda de los existente, id_asesor de los existente, probabilidad de los existente,
@@ -1509,7 +1519,7 @@ motivo_denegacion de los existente, id_competidor de los existente, id_cuenta_cl
 -- @maxElement int, @random1 int, @randomRol int
 DECLARE @randomContacto int, @randomCuenta VARCHAR(30), @randomZona int,
 @randomSector int, @randomEtapa VARCHAR(30), @randomMoneda int, @randomAsesor int, @randomProbabilidad int,
-@randomMotivo int, @randomCompetidor VARCHAR(30)
+@randomMotivo int, @randomCompetidor VARCHAR(30), @randomTipoCotizacion VARCHAR(50)
 
 SET @maxElement = 1;
 WHILE @maxElement < 15
@@ -1524,11 +1534,12 @@ BEGIN
   SELECT TOP 1 @randomProbabilidad = porcentaje FROM Probabilidad ORDER BY NEWID();
   SELECT TOP 1 @randomMotivo = id FROM Motivo ORDER BY NEWID();
   SELECT TOP 1 @randomCompetidor = nombre FROM Competidor ORDER BY NEWID();
+  SELECT TOP 1 @randomTipoCotizacion = id FROM tipoCotizacion ORDER BY NEWID();
   SELECT @random1 = 1 + RAND() * 100;
   IF NOT (SELECT COUNT(*) FROM Cotizacion WHERE id_factura = @random1 or nombre_cuenta = @randomCuenta) > 0
   BEGIN
     INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
-    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);    
+    VALUES (@maxElement,@random1, @randomContacto, @randomTipoCotizacion, 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);    
 	SET @maxElement = @maxElement + 1;
   END
 END
@@ -1710,15 +1721,14 @@ WHILE @i > 0
     end catch
   END
 
-
-SET @i = 20
+--DECLARE @i INt, @cotizacion int, @tarea int, @actividad int, @caso int
+SET @i = 300
 WHILE @i > 0
   BEGIN
-    SET @cotizacion = (SELECT TOP(1) id FROM Caso ORDER BY NEWID())
+	SET @caso = (SELECT TOP(1) id FROM Caso ORDER BY NEWID())
+    SET @cotizacion = (SELECT TOP(1) numero_cotizacion FROM Cotizacion ORDER BY NEWID())
     SET @tarea = (SELECT TOP(1) id FROM Tarea ORDER BY NEWID())
     SET @actividad = (SELECT TOP(1) id FROM Actividad ORDER BY NEWID())
-
-
 	begin try
       begin
 			INSERT INTO CasosTarea VALUES
@@ -1726,6 +1736,12 @@ WHILE @i > 0
 
 			INSERT INTO CasosActividad VALUES
 			(@caso, @actividad)
+
+			insert into CotizacionTarea VALUES
+			(@cotizacion, @tarea)
+
+			insert into CotizacionActividad VALUES
+			(@cotizacion, @actividad)
 
 		  SET @i = @i - 1
       end

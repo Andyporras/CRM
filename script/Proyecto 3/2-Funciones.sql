@@ -66,7 +66,7 @@ RETURNS TABLE
 AS
 	RETURN (
 			SELECT dep.nombre AS departamento, (COUNT(dep.nombre) * 100 / (
-			SELECT COUNT(*) FROM vCantidadVentasPorDepartamento)) AS porcentaje
+			SELECT COUNT(*) FROM vVentas)) AS porcentaje
 			FROM vVentas coti
 				INNER JOIN Usuario u ON u.cedula = coti.id_asesor
 				INNER JOIN Departamento dep ON dep.id = u.id_departamento
@@ -128,22 +128,6 @@ RETURN (
 )
 GO
 
-/*
-
-
-/*
-Función que filtra por rango de fecha las/el Cantidad de contactos de cliente por usuario.
-*/
-DROP FUNCTION IF EXISTS fTotalContactoClientesPorUsuario
-GO
-CREATE FUNCTION fTotalContactoClientesPorUsuario(@fechaInicio DATE, @fechaFin DATE)
-RETURNS TABLE
-AS
-RETURN (
---consultaSql
-)
-GO
-
 
 /*
 Función que filtra por rango de fecha las/el Cantidad de Ejecuciones con cierre por mes, por año.
@@ -154,8 +138,10 @@ CREATE FUNCTION fTotalEjecucionesConCierre(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
---consultaSql
-)
+	SELECT COUNT(*) as Total FROM Ejecucion
+		WHERE fechaCierre > @fechaInicio AND
+			  fechaCierre < @fechaFin
+	)
 GO
 
 
@@ -168,8 +154,14 @@ CREATE FUNCTION fCotizacionesConMasActividades(@fechaInicio DATE, @fechaFin DATE
 RETURNS TABLE
 AS
 RETURN (
---consultaSql
-)
+	SELECT TOP(10) numero_cotizacion,
+				(SELECT (SELECT dbo.fCotizacionesConTotalTareas(numero_cotizacion)) +
+						(SELECT dbo.fCotizacionesConTotalActividades(numero_cotizacion))
+				) AS total_tareas_actividades
+	 FROM Cotizacion coti
+		WHERE fecha_cotizacion >= @fechaInicio AND
+			  fecha_cotizacion <= @fechaFin
+	 )
 GO
 
 
@@ -182,8 +174,13 @@ CREATE FUNCTION fCantidadCotizacionesPorTipo(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
---consultaSql
-)
+		SELECT tipoCotizacion.nombre, COUNT(numero_cotizacion) cantidad
+		FROM Cotizacion, tipoCotizacion
+			WHERE Cotizacion.tipo = tipoCotizacion.id AND
+				  fecha_cotizacion >= @fechaInicio AND
+				  fecha_cotizacion <= @fechaFin
+		 GROUP BY tipoCotizacion.nombre
+		)
 GO
 
 
@@ -196,16 +193,17 @@ CREATE FUNCTION fCasosPorTipo(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
---consultaSql
-)
+		SELECT tc.tipo AS tipo, (
+								(COUNT(tc.tipo) * 100) /
+								(SELECT COUNT(*) FROM Caso)
+								) AS Porcentaje
+		FROM Caso c
+			INNER JOIN TipoCaso tc ON c.id_tipo = tc.id
+			INNER JOIN Ejecucion ej ON c.proyectoAsociado = ej.id AND
+			ej.fechaEjecucion >= @fechaInicio AND ej.fechaEjecucion <= @fechaFin
+		GROUP BY tc.tipo
+		)
 GO
-
-
-*/
-
-
-
-
 
 
 

@@ -129,3 +129,44 @@ INSERT into mes values
 		(10, 'Octubre'),
 		(11, 'Noviembre'),
 		(12, 'Diciembre')
+
+
+GO
+-- Funcion que obtiene las cotizaciones con su total de actividades
+DROP FUNCTION IF EXISTS fCotizacionesConTotalActividades
+GO
+CREATE FUNCTION fCotizacionesConTotalActividades(@numero_cotizacion INT)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @totalActividades INT
+	SELECT @totalActividades = COUNT(id_cotizacion)
+		FROM CotizacionActividad
+		WHERE id_cotizacion = @numero_cotizacion
+	RETURN @totalActividades
+END
+GO
+
+-- Funcion que obtiene las cotizaciones con su total de tareas
+DROP FUNCTION IF EXISTS fCotizacionesConTotalTareas
+GO
+CREATE FUNCTION fCotizacionesConTotalTareas(@numero_cotizacion INT)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @totalTareas INT
+	SELECT @totalTareas = COUNT(id_cotizacion)
+		FROM CotizacionTarea
+		WHERE id_cotizacion = @numero_cotizacion
+	RETURN @totalTareas
+END
+GO
+-- Vista que retorna la cantidad de casos por tipo
+DROP VIEW IF EXISTS vCantidadCasosPorTipo
+GO
+CREATE VIEW vCantidadCasosPorTipo AS
+	SELECT tc.tipo AS tipo, COUNT(tc.tipo) AS cantidad_casos
+	FROM Caso c
+		INNER JOIN TipoCaso tc ON c.id_tipo = tc.id
+	GROUP BY tc.tipo
+GO

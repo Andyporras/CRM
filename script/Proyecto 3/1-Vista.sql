@@ -45,11 +45,10 @@ GO
 CREATE VIEW vPorcentajeVentasPorDepartamento AS
 	SELECT departamento, (
 							(cantidad_ventas * 100) / (
-							SELECT COUNT(*) FROM vCantidadVentasPorDepartamento
-							)) AS porcentaje
+							SELECT COUNT(*) FROM vVentas
+							)) AS porcentaje_de_ventas
 	FROM vCantidadVentasPorDepartamento
 GO
-
 
 /*
  Ventas y cotizaciones por mes, por año, en valor presente. Gráfico de barras.
@@ -96,35 +95,43 @@ CREATE VIEW vVentasValorPresentePorAnno AS
 	GROUP BY YEAR(ve.fecha_cotizacion)
 GO
 
-/*
 
 /*
 Cantidad de contactos de cliente por usuario.
 */
 DROP VIEW IF EXISTS vTotalContactoClientesPorUsuario
 GO
-CREATE VIEW TotalContactoClientesPorUsuario AS
-     --consultaSQL
+CREATE VIEW vTotalContactoClientesPorUsuario AS
+    select us.cedula, us.nombre + ' ' + us.apellido1 + ' ' + us.apellido2 as Usuario, COUNT(con.id) AS contactos_de_cliente
+	from Contacto con, Usuario us
+	WHERE cedula_usuario = us.cedula
+	group by us.cedula, us.nombre + ' ' + us.apellido1 + ' ' + us.apellido2
 GO
 
-
 /*
+
 Cantidad de Ejecuciones con cierre por mes, por año.
 */
 DROP VIEW IF EXISTS vTotalEjecucionesConCierre
 GO
-CREATE VIEW TotalEjecucionesConCierre AS
-     --consultaSQL
+CREATE VIEW vTotalEjecucionesConCierre AS
+     SELECT COUNT(*) as Total FROM Ejecucion
+		WHERE fechaCierre < GETDATE()
 GO
 
 
 /*
 Top 10 de cotizaciones con más actividades y tareas (sumadas juntas).
 */
-DROP VIEW IF EXISTS vCotizacionesConMasActividades
+DROP VIEW IF EXISTS vCotizacionesConMasActividadesTareas
 GO
-CREATE VIEW CotizacionesConMasActividades AS
-     --consultaSQL
+CREATE VIEW vCotizacionesConMasActividadesTareas AS
+     SELECT TOP(10) numero_cotizacion,
+				(SELECT (SELECT dbo.fCotizacionesConTotalTareas(numero_cotizacion)) +
+						(SELECT dbo.fCotizacionesConTotalActividades(numero_cotizacion))
+				) AS total_tareas_actividades
+	 FROM Cotizacion coti
+	 ORDER BY total_tareas_actividades DESC
 GO
 
 
@@ -133,8 +140,11 @@ Cantidad de cotizaciones por tipo. Gráfico circular.
 */
 DROP VIEW IF EXISTS vCantidadCotizacionesPorTipo
 GO
-CREATE VIEW CantidadCotizacionesPorTipo AS
-     --consultaSQL
+CREATE VIEW vCantidadCotizacionesPorTipo AS
+     SELECT tipoCotizacion.nombre, COUNT(numero_cotizacion) cantidad
+		FROM Cotizacion, tipoCotizacion
+		WHERE Cotizacion.tipo = tipoCotizacion.id
+	 GROUP BY tipoCotizacion.nombre
 GO
 
 
@@ -143,11 +153,14 @@ Casos por tipo (porcentual). Gráfico circular
 */
 DROP VIEW IF EXISTS vCasosPorTipo
 GO
-CREATE VIEW CasosPorTipo AS
-     --consultaSQL
+CREATE VIEW vCasosPorTipo AS
+     SELECT tipo,
+			(
+				(cantidad_casos * 100) /
+				(SELECT COUNT(*) FROM Caso)
+			) AS Porcentaje
+	 FROM vCantidadCasosPorTipo
 GO
-
-*/
 
 
 

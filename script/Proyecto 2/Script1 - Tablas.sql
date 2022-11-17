@@ -415,3 +415,8 @@ CREATE TABLE ValorPresenteCotizaciones (
 	total_cotizacion FLOAT NOT NULL,
 	total_a_valor_presente FLOAT NOT NULL
 )
+
+CREATE TABLE tipoCotizacion(
+  id INT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL
+)
