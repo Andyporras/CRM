@@ -321,3 +321,20 @@ RETURN (
 )
 GO
 
+
+/*
+Función que filtra por rango de fecha las/el  Casos por estado. Gráfico circular
+*/
+DROP FUNCTION IF EXISTS fCasosPorEstado
+GO
+CREATE FUNCTION fCasosPorEstado(@fechaInicio DATE, @fechaFin DATE)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT e.nombre, COUNT(e.nombre) AS cantidad
+	FROM vCasosEjecucion CE
+		INNER JOIN Estado e ON e.id = CE.id_estado
+		WHERE CE.fechaEjecucion >= @fechaInicio AND CE.fechaCierre <= @fechaFin
+	GROUP BY e.nombre
+)
+GO

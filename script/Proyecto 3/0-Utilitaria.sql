@@ -181,3 +181,15 @@ CREATE VIEW vCantidadCasosPorTipo AS
 		INNER JOIN TipoCaso tc ON c.id_tipo = tc.id
 	GROUP BY tc.tipo
 GO
+
+/* Vista que muestra los datos de los casos y ejecucion 
+*/
+DROP VIEW IF EXISTS vCasosEjecucion
+GO
+CREATE VIEW vCasosEjecucion AS
+SELECT c.id,c.asunto, c.id_tipo,c.id_estado,c.nombreCuenta, c.nombreContacto, c.proyectoAsociado, e.id AS id_ejecucion,e.fechaEjecucion, e.fechaCierre
+FROM Caso c
+INNER JOIN Ejecucion e ON c.nombreCuenta = e.nombreCuenta
+GO
+
+select *from vCasosEjecucion

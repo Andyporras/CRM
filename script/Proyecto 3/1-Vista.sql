@@ -254,4 +254,18 @@ GROUP BY u.nombre
 ORDER BY Monto DESC
 GO
 
+/*
+ Casos por estado. Gráfico circular
+*/
+DROP VIEW IF EXISTS vCasosPorEstado
+GO
+CREATE VIEW vCasosPorEstado AS
+SELECT e.nombre, COUNT(c.id_estado) AS Cantidad
+FROM Estado e
+LEFT JOIN Caso c ON e.id = c.id_estado
+GROUP BY e.nombre
+GO
+
+select *from vCasosPorEstado
+
 select *from vTop10VendedoresMayorVentas
