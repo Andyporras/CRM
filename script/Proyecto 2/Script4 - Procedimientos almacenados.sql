@@ -759,7 +759,7 @@ BEGIN
     BEGIN CATCH
         PRINT @@ERROR
         print ERROR_MESSAGE()
-        SET @ret = -2
+        SET @ret = -1
         PRINT @ret
     END CATCH
 END
