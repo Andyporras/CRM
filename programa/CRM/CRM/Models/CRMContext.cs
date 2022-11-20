@@ -36,6 +36,7 @@ namespace CRM.Models
         public virtual DbSet<Etapa> Etapas { get; set; } = null!;
         public virtual DbSet<Familium> Familia { get; set; } = null!;
         public virtual DbSet<Inflacion> Inflacions { get; set; } = null!;
+        public virtual DbSet<Me> Mes { get; set; } = null!;
         public virtual DbSet<Monedum> Moneda { get; set; } = null!;
         public virtual DbSet<Motivo> Motivos { get; set; } = null!;
         public virtual DbSet<Origen> Origens { get; set; } = null!;
@@ -49,15 +50,44 @@ namespace CRM.Models
         public virtual DbSet<Tarea> Tareas { get; set; } = null!;
         public virtual DbSet<TipoCaso> TipoCasos { get; set; } = null!;
         public virtual DbSet<TipoContacto> TipoContactos { get; set; } = null!;
+        public virtual DbSet<TipoCotizacion> TipoCotizacions { get; set; } = null!;
         public virtual DbSet<TipoPrivilegio> TipoPrivilegios { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
+        public virtual DbSet<VCantidadCasosPorTipo> VCantidadCasosPorTipos { get; set; } = null!;
+        public virtual DbSet<VCantidadCotizacionesPorDepartamento> VCantidadCotizacionesPorDepartamentos { get; set; } = null!;
+        public virtual DbSet<VCantidadCotizacionesPorTipo> VCantidadCotizacionesPorTipos { get; set; } = null!;
+        public virtual DbSet<VCantidadVentasPorDepartamento> VCantidadVentasPorDepartamentos { get; set; } = null!;
+        public virtual DbSet<VCasosPorTipo> VCasosPorTipos { get; set; } = null!;
+        public virtual DbSet<VClienteCuentaCliente> VClienteCuentaClientes { get; set; } = null!;
         public virtual DbSet<VClienteInfoGeneral> VClienteInfoGenerals { get; set; } = null!;
         public virtual DbSet<VContactosInfoGeneral> VContactosInfoGenerals { get; set; } = null!;
         public virtual DbSet<VCotizacionInfoGeneral> VCotizacionInfoGenerals { get; set; } = null!;
+        public virtual DbSet<VCotizacionesConMasActividadesTarea> VCotizacionesConMasActividadesTareas { get; set; } = null!;
+        public virtual DbSet<VCotizacionesPorDepartamento> VCotizacionesPorDepartamentos { get; set; } = null!;
+        public virtual DbSet<VCotizacionesValorPresentePorAnno> VCotizacionesValorPresentePorAnnos { get; set; } = null!;
+        public virtual DbSet<VCotizacionesValorPresentePorMe> VCotizacionesValorPresentePorMes { get; set; } = null!;
+        public virtual DbSet<VFamiliaProductosVendido> VFamiliaProductosVendidos { get; set; } = null!;
+        public virtual DbSet<VPorcentajeVentasPorDepartamento> VPorcentajeVentasPorDepartamentos { get; set; } = null!;
         public virtual DbSet<VProductosInfoGeneral> VProductosInfoGenerals { get; set; } = null!;
-        public virtual DbSet<ValorPresenteCotizacione> ValorPresenteCotizaciones { get; set; } = null!;
+        public virtual DbSet<VProductosMasCotizado> VProductosMasCotizados { get; set; } = null!;
         public virtual DbSet<VProductosXcotizacion> VProductosXcotizacions { get; set; } = null!;
+        public virtual DbSet<VTotalContactoClientesPorUsuario> VTotalContactoClientesPorUsuarios { get; set; } = null!;
+        public virtual DbSet<VTotalEjecucionesConCierre> VTotalEjecucionesConCierres { get; set; } = null!;
+        public virtual DbSet<VVenta> VVentas { get; set; } = null!;
+        public virtual DbSet<VVentasPorZona> VVentasPorZonas { get; set; } = null!;
+        public virtual DbSet<VVentasValorPresentePorAnno> VVentasValorPresentePorAnnos { get; set; } = null!;
+        public virtual DbSet<VVentasValorPresentePorMe> VVentasValorPresentePorMes { get; set; } = null!;
+        public virtual DbSet<ValorPresenteCotizacione> ValorPresenteCotizaciones { get; set; } = null!;
         public virtual DbSet<Zona> Zonas { get; set; } = null!;
+
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+////#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("server=localhost; database=CRM; User ID=miltonials; Password=milton2022;");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -208,7 +238,7 @@ namespace CRM.Models
                         r => r.HasOne<Caso>().WithMany().HasForeignKey("IdCaso").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_CasosActividad_Caso"),
                         j =>
                         {
-                            j.HasKey("IdCaso", "IdActividad").HasName("PK__CasosAct__EAD2EFF363EAC7B9");
+                            j.HasKey("IdCaso", "IdActividad").HasName("PK__CasosAct__EAD2EFF3CEFC99DB");
 
                             j.ToTable("CasosActividad");
 
@@ -225,7 +255,7 @@ namespace CRM.Models
                         r => r.HasOne<Caso>().WithMany().HasForeignKey("IdCaso").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_CasosTarea_Caso"),
                         j =>
                         {
-                            j.HasKey("IdCaso", "IdTarea").HasName("PK__CasosTar__AB11140B52F0136B");
+                            j.HasKey("IdCaso", "IdTarea").HasName("PK__CasosTar__AB11140BA785FA9B");
 
                             j.ToTable("CasosTarea");
 
@@ -238,11 +268,11 @@ namespace CRM.Models
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__Cliente__415B7BE4A2CC730D");
+                    .HasName("PK__Cliente__415B7BE470B64DD1");
 
                 entity.ToTable("Cliente");
 
-                entity.HasIndex(e => e.Cedula, "UQ__Cliente__415B7BE59EE005D8")
+                entity.HasIndex(e => e.Cedula, "UQ__Cliente__415B7BE565BD473F")
                     .IsUnique();
 
                 entity.Property(e => e.Cedula)
@@ -279,7 +309,7 @@ namespace CRM.Models
             modelBuilder.Entity<Competidor>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__Competid__72AFBCC78B751D34");
+                    .HasName("PK__Competid__72AFBCC796C39873");
 
                 entity.ToTable("Competidor");
 
@@ -291,18 +321,14 @@ namespace CRM.Models
 
             modelBuilder.Entity<Contacto>(entity =>
             {
-                entity.HasKey(e => new { e.Id})
-                    .HasName("PK__Contacto__7EBE369A756F6CAD");
-
                 entity.ToTable("Contacto");
 
-                entity.HasIndex(e => e.Id, "UQ__Contacto__3213E83EB2B84A8F")
+                entity.HasIndex(e => e.Id, "UQ__Contacto__3213E83EF71EBE2B")
                     .IsUnique();
 
-                entity.HasIndex(e => e.CedulaCliente, "UQ__Contacto__CADDEA54765DE2EB")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.CedulaCliente)
                     .HasMaxLength(30)
@@ -365,31 +391,37 @@ namespace CRM.Models
                 entity.HasOne(d => d.CedulaUsuarioNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.CedulaUsuario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_Usuario");
 
                 entity.HasOne(d => d.DireccionNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.Direccion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_Direccion");
 
                 entity.HasOne(d => d.EstadoNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.Estado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_Estado");
 
                 entity.HasOne(d => d.IdSectorNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.IdSector)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_Sector");
 
                 entity.HasOne(d => d.IdZonaNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.IdZona)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_Zona");
 
                 entity.HasOne(d => d.TipoContactoNavigation)
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.TipoContacto)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Contacto_TipoContacto");
 
                 entity.HasMany(d => d.IdActividads)
@@ -397,10 +429,10 @@ namespace CRM.Models
                     .UsingEntity<Dictionary<string, object>>(
                         "ContactoActividad",
                         l => l.HasOne<Actividad>().WithMany().HasForeignKey("IdActividad").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoActividad_Actividad"),
-                        r => r.HasOne<Contacto>().WithMany().HasPrincipalKey("Id").HasForeignKey("IdContacto").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoActividad_Contacto"),
+                        r => r.HasOne<Contacto>().WithMany().HasForeignKey("IdContacto").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoActividad_Contacto"),
                         j =>
                         {
-                            j.HasKey("IdContacto", "IdActividad").HasName("PK__Contacto__24576630FEFB083E");
+                            j.HasKey("IdContacto", "IdActividad").HasName("PK__Contacto__245766309E9DAD4C");
 
                             j.ToTable("ContactoActividad");
 
@@ -414,10 +446,10 @@ namespace CRM.Models
                     .UsingEntity<Dictionary<string, object>>(
                         "ContactoTarea",
                         l => l.HasOne<Tarea>().WithMany().HasForeignKey("IdTarea").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoTarea_Tarea"),
-                        r => r.HasOne<Contacto>().WithMany().HasPrincipalKey("Id").HasForeignKey("IdContacto").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoTarea_Contacto"),
+                        r => r.HasOne<Contacto>().WithMany().HasForeignKey("IdContacto").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_ContactoTarea_Contacto"),
                         j =>
                         {
-                            j.HasKey("IdContacto", "IdTarea").HasName("PK__Contacto__65949DC88A74DA9F");
+                            j.HasKey("IdContacto", "IdTarea").HasName("PK__Contacto__65949DC88503F6D1");
 
                             j.ToTable("ContactoTarea");
 
@@ -430,17 +462,17 @@ namespace CRM.Models
             modelBuilder.Entity<Cotizacion>(entity =>
             {
                 entity.HasKey(e => new { e.NumeroCotizacion, e.NombreCuenta })
-                    .HasName("PK__Cotizaci__0857812529D010FA");
+                    .HasName("PK__Cotizaci__085781251EE32C3A");
 
                 entity.ToTable("Cotizacion");
 
-                entity.HasIndex(e => e.IdFactura, "UQ__Cotizaci__6C08ED5214E42565")
+                entity.HasIndex(e => e.IdFactura, "UQ__Cotizaci__6C08ED52EC615FA1")
                     .IsUnique();
 
-                entity.HasIndex(e => e.NombreCuenta, "UQ__Cotizaci__7E5CF2B99EA7A7F4")
+                entity.HasIndex(e => e.NombreCuenta, "UQ__Cotizaci__7E5CF2B980FF46C4")
                     .IsUnique();
 
-                entity.HasIndex(e => e.NumeroCotizacion, "UQ__Cotizaci__9FB24E0F9D410862")
+                entity.HasIndex(e => e.NumeroCotizacion, "UQ__Cotizaci__9FB24E0FCF0AFA8A")
                     .IsUnique();
 
                 entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
@@ -518,42 +550,49 @@ namespace CRM.Models
                 entity.HasOne(d => d.IdAsesorNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdAsesor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Asesor");
 
                 entity.HasOne(d => d.IdCompetidorNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdCompetidor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Competidor");
 
                 entity.HasOne(d => d.IdContactoNavigation)
                     .WithMany(p => p.Cotizacions)
-                    .HasPrincipalKey(p => p.Id)
                     .HasForeignKey(d => d.IdContacto)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_Cotizacion_Contacto");
 
                 entity.HasOne(d => d.IdEtapaNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdEtapa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Etapa");
 
                 entity.HasOne(d => d.IdMonedaNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdMoneda)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Moneda");
 
                 entity.HasOne(d => d.IdSectorNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdSector)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Sector");
 
                 entity.HasOne(d => d.IdZonaNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.IdZona)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Zona");
 
                 entity.HasOne(d => d.MotivoDenegacionNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.MotivoDenegacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Motivo");
 
                 entity.HasOne(d => d.NombreCuentaNavigation)
@@ -566,6 +605,7 @@ namespace CRM.Models
                 entity.HasOne(d => d.ProbabilidadNavigation)
                     .WithMany(p => p.Cotizacions)
                     .HasForeignKey(d => d.Probabilidad)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Cotizacion_Probabilidad");
 
                 entity.HasMany(d => d.IdActividads)
@@ -576,7 +616,7 @@ namespace CRM.Models
                         r => r.HasOne<Cotizacion>().WithMany().HasPrincipalKey("NumeroCotizacion").HasForeignKey("IdCotizacion").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_CotizacionActividad_Cotizacion"),
                         j =>
                         {
-                            j.HasKey("IdCotizacion", "IdActividad").HasName("PK__Cotizaci__BADEE5FCD0E375DD");
+                            j.HasKey("IdCotizacion", "IdActividad").HasName("PK__Cotizaci__BADEE5FCC97B4CD2");
 
                             j.ToTable("CotizacionActividad");
 
@@ -593,7 +633,7 @@ namespace CRM.Models
                         r => r.HasOne<Cotizacion>().WithMany().HasPrincipalKey("NumeroCotizacion").HasForeignKey("IdCotizacion").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_CotizacionTarea_Cotizacion"),
                         j =>
                         {
-                            j.HasKey("IdCotizacion", "IdTarea").HasName("PK__Cotizaci__FB1D1E04CB6036A4");
+                            j.HasKey("IdCotizacion", "IdTarea").HasName("PK__Cotizaci__FB1D1E04B435083A");
 
                             j.ToTable("CotizacionTarea");
 
@@ -606,14 +646,14 @@ namespace CRM.Models
             modelBuilder.Entity<CuentaCliente>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.CedulaCliente, e.Moneda, e.NombreCuenta })
-                    .HasName("PK__CuentaCl__F5BA606FCFD900E9");
+                    .HasName("PK__CuentaCl__F5BA606F9A1E70DA");
 
                 entity.ToTable("CuentaCliente");
 
-                entity.HasIndex(e => e.NombreCuenta, "UQ__CuentaCl__7E5CF2B950CE3D4A")
+                entity.HasIndex(e => e.NombreCuenta, "UQ__CuentaCl__7E5CF2B97D1E9ECF")
                     .IsUnique();
 
-                entity.HasIndex(e => e.CedulaCliente, "UQ__CuentaCl__CADDEA544D4977F5")
+                entity.HasIndex(e => e.CedulaCliente, "UQ__CuentaCl__CADDEA544383646B")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -696,7 +736,7 @@ namespace CRM.Models
             {
                 entity.ToTable("Direccion");
 
-                entity.HasIndex(e => e.Id, "UQ__Direccio__3213E83E60A3F8EE")
+                entity.HasIndex(e => e.Id, "UQ__Direccio__3213E83E6E84BCC6")
                     .IsUnique();
 
                 entity.Property(e => e.Id)
@@ -712,16 +752,19 @@ namespace CRM.Models
                 entity.HasOne(d => d.IdCantonNavigation)
                     .WithMany(p => p.Direccions)
                     .HasForeignKey(d => d.IdCanton)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Direccion_Canton");
 
                 entity.HasOne(d => d.IdDistritoNavigation)
                     .WithMany(p => p.Direccions)
                     .HasForeignKey(d => d.IdDistrito)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Direccion_Distrito");
 
                 entity.HasOne(d => d.IdProvinciaNavigation)
                     .WithMany(p => p.Direccions)
                     .HasForeignKey(d => d.IdProvincia)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Direccion_Provincia");
             });
 
@@ -742,17 +785,17 @@ namespace CRM.Models
             modelBuilder.Entity<Ejecucion>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.NombreCuenta })
-                    .HasName("PK__Ejecucio__8A16C9DA7659E961");
+                    .HasName("PK__Ejecucio__8A16C9DA682313E0");
 
                 entity.ToTable("Ejecucion");
 
-                entity.HasIndex(e => e.NumeroCotizacion, "UQ__Ejecucio__2B77500A72EEE1A3")
+                entity.HasIndex(e => e.NumeroCotizacion, "UQ__Ejecucio__2B77500A21B8E87A")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Id, "UQ__Ejecucio__3213E83E9B24B909")
+                entity.HasIndex(e => e.Id, "UQ__Ejecucio__3213E83E4D7274FB")
                     .IsUnique();
 
-                entity.HasIndex(e => e.NombreCuenta, "UQ__Ejecucio__80521E5B71BC415B")
+                entity.HasIndex(e => e.NombreCuenta, "UQ__Ejecucio__80521E5B3D1CC9B2")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -822,7 +865,7 @@ namespace CRM.Models
                         r => r.HasOne<Ejecucion>().WithMany().HasPrincipalKey("Id").HasForeignKey("IdEjecucion").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_EjecucionActividad_Ejecucion"),
                         j =>
                         {
-                            j.HasKey("IdEjecucion", "IdActividad").HasName("PK__Ejecucio__83237523526E150E");
+                            j.HasKey("IdEjecucion", "IdActividad").HasName("PK__Ejecucio__83237523C2B598CF");
 
                             j.ToTable("EjecucionActividad");
 
@@ -839,7 +882,7 @@ namespace CRM.Models
                         r => r.HasOne<Ejecucion>().WithMany().HasPrincipalKey("Id").HasForeignKey("IdEjecucion").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_EjecucionTarea_Ejecucion"),
                         j =>
                         {
-                            j.HasKey("IdEjecucion", "IdTarea").HasName("PK__Ejecucio__C2E08EDBEC79D761");
+                            j.HasKey("IdEjecucion", "IdTarea").HasName("PK__Ejecucio__C2E08EDB61FE35FA");
 
                             j.ToTable("EjecucionTarea");
 
@@ -921,7 +964,7 @@ namespace CRM.Models
             modelBuilder.Entity<Etapa>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__Etapa__72AFBCC724C9C2D1");
+                    .HasName("PK__Etapa__72AFBCC75C081A84");
 
                 entity.ToTable("Etapa");
 
@@ -934,7 +977,7 @@ namespace CRM.Models
             modelBuilder.Entity<Familium>(entity =>
             {
                 entity.HasKey(e => e.Codigo)
-                    .HasName("PK__Familia__40F9A2072FB5CC4B");
+                    .HasName("PK__Familia__40F9A20749C5BF9E");
 
                 entity.Property(e => e.Codigo)
                     .ValueGeneratedNever()
@@ -961,7 +1004,7 @@ namespace CRM.Models
             modelBuilder.Entity<Inflacion>(entity =>
             {
                 entity.HasKey(e => e.Anno)
-                    .HasName("PK__Inflacio__61B2C0DD2A74E4CF");
+                    .HasName("PK__Inflacio__61B2C0DD25850D71");
 
                 entity.ToTable("Inflacion");
 
@@ -970,6 +1013,20 @@ namespace CRM.Models
                     .HasColumnName("anno");
 
                 entity.Property(e => e.Porcentaje).HasColumnName("porcentaje");
+            });
+
+            modelBuilder.Entity<Me>(entity =>
+            {
+                entity.ToTable("mes");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
             });
 
             modelBuilder.Entity<Monedum>(entity =>
@@ -1032,7 +1089,7 @@ namespace CRM.Models
             modelBuilder.Entity<Probabilidad>(entity =>
             {
                 entity.HasKey(e => e.Porcentaje)
-                    .HasName("PK__Probabil__F36D48B9ACCADC74");
+                    .HasName("PK__Probabil__F36D48B9029B49E7");
 
                 entity.ToTable("Probabilidad");
 
@@ -1043,12 +1100,12 @@ namespace CRM.Models
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.HasKey(e => new { e.Codigo})
-                    .HasName("PK__Producto__15F6490F721B7434");
+                entity.HasKey(e => new { e.Codigo, e.CodigoFamilia })
+                    .HasName("PK__Producto__15F6490FEE57BCD2");
 
                 entity.ToTable("Producto");
 
-                entity.HasIndex(e => e.Codigo, "UQ__Producto__40F9A206F65DB503")
+                entity.HasIndex(e => e.Codigo, "UQ__Producto__40F9A2069FA0869C")
                     .IsUnique();
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
@@ -1084,7 +1141,7 @@ namespace CRM.Models
             modelBuilder.Entity<ProductoCotizacion>(entity =>
             {
                 entity.HasKey(e => new { e.CodigoProducto, e.NumeroCotizacion })
-                    .HasName("PK__Producto__E9AA23493DC06231");
+                    .HasName("PK__Producto__E9AA23498EFAD78A");
 
                 entity.ToTable("ProductoCotizacion");
 
@@ -1144,7 +1201,7 @@ namespace CRM.Models
                         r => r.HasOne<Rol>().WithMany().HasForeignKey("IdRol").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_UsuarioRoles_Rol"),
                         j =>
                         {
-                            j.HasKey("IdRol", "CedulaUsuario").HasName("PK__UsuarioR__85D094499DF10DCD");
+                            j.HasKey("IdRol", "CedulaUsuario").HasName("PK__UsuarioR__85D09449FC3E7062");
 
                             j.ToTable("UsuarioRoles");
 
@@ -1161,7 +1218,7 @@ namespace CRM.Models
                         r => r.HasOne<Rol>().WithMany().HasForeignKey("IdRol").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("fk_PrivilegiosXRol_Rol"),
                         j =>
                         {
-                            j.HasKey("IdRol", "IdPrivilegio").HasName("PK__Privileg__BD72B6410287F946");
+                            j.HasKey("IdRol", "IdPrivilegio").HasName("PK__Privileg__BD72B64110CDDF8A");
 
                             j.ToTable("PrivilegiosXrol");
 
@@ -1183,37 +1240,6 @@ namespace CRM.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
-            });
-
-            modelBuilder.Entity<VProductosXcotizacion>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("VProductosXcotizacion");
-
-                entity.Property(e => e.Codigo).HasColumnName("codigo");
-
-                entity.Property(e => e.Descripcion)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("descripcion");
-
-                entity.Property(e => e.Estado)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Familia)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Nombre)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("nombre");
-
-                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
-
-                entity.Property(e => e.PrecioEstandar).HasColumnName("precio_estandar");
             });
 
             modelBuilder.Entity<Tarea>(entity =>
@@ -1274,6 +1300,20 @@ namespace CRM.Models
                     .HasColumnName("tipo");
             });
 
+            modelBuilder.Entity<TipoCotizacion>(entity =>
+            {
+                entity.ToTable("tipoCotizacion");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
             modelBuilder.Entity<TipoPrivilegio>(entity =>
             {
                 entity.ToTable("TipoPrivilegio");
@@ -1291,11 +1331,11 @@ namespace CRM.Models
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__Usuario__415B7BE4BD6E47FD");
+                    .HasName("PK__Usuario__415B7BE455E3C297");
 
                 entity.ToTable("Usuario");
 
-                entity.HasIndex(e => e.Cedula, "UQ__Usuario__415B7BE52934F19B")
+                entity.HasIndex(e => e.Cedula, "UQ__Usuario__415B7BE5E716A293")
                     .IsUnique();
 
                 entity.Property(e => e.Cedula)
@@ -1335,11 +1375,79 @@ namespace CRM.Models
                     .HasConstraintName("fk_Usuario_Departamento");
             });
 
-            modelBuilder.Entity<VClienteInfoGeneral>(entity =>
+            modelBuilder.Entity<VCantidadCasosPorTipo>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("vClienteInfoGeneral");
+                entity.ToView("vCantidadCasosPorTipo");
+
+                entity.Property(e => e.CantidadCasos).HasColumnName("cantidad_casos");
+
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo");
+            });
+
+            modelBuilder.Entity<VCantidadCotizacionesPorDepartamento>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCantidadCotizacionesPorDepartamento");
+
+                entity.Property(e => e.CantidadCotizaciones).HasColumnName("cantidad_cotizaciones");
+
+                entity.Property(e => e.Departamento)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("departamento");
+            });
+
+            modelBuilder.Entity<VCantidadCotizacionesPorTipo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCantidadCotizacionesPorTipo");
+
+                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<VCantidadVentasPorDepartamento>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCantidadVentasPorDepartamento");
+
+                entity.Property(e => e.CantidadVentas).HasColumnName("cantidad_ventas");
+
+                entity.Property(e => e.Departamento)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("departamento");
+            });
+
+            modelBuilder.Entity<VCasosPorTipo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCasosPorTipo");
+
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo");
+            });
+
+            modelBuilder.Entity<VClienteCuentaCliente>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vClienteCuentaCliente");
 
                 entity.Property(e => e.Apellido1)
                     .HasMaxLength(30)
@@ -1356,15 +1464,31 @@ namespace CRM.Models
                     .IsUnicode(false)
                     .HasColumnName("cedula");
 
+                entity.Property(e => e.CedulaCliente)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("cedula_cliente");
+
                 entity.Property(e => e.Celular)
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("celular");
 
+                entity.Property(e => e.IdCuentaCliente).HasColumnName("id_cuenta_cliente");
+
+                entity.Property(e => e.IdSector).HasColumnName("id_sector");
+
+                entity.Property(e => e.Moneda).HasColumnName("moneda");
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+
+                entity.Property(e => e.NombreCuenta)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre_cuenta");
 
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(30)
@@ -1372,9 +1496,62 @@ namespace CRM.Models
                     .HasColumnName("telefono");
             });
 
+            modelBuilder.Entity<VClienteInfoGeneral>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vClienteInfoGeneral");
+
+                entity.Property(e => e.CedulaCliente)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("cedula_cliente");
+
+                entity.Property(e => e.ContactoPrincipal)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("contacto_principal");
+
+                entity.Property(e => e.CorreoElectronico)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("correo_electronico");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.InformacionAdicional)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("informacion_adicional");
+
+                entity.Property(e => e.Moneda)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("moneda");
+
+                entity.Property(e => e.NombreCuenta)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre_cuenta");
+
+                entity.Property(e => e.Sector)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SitioWeb)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("sitio_web");
+
+                entity.Property(e => e.Zona)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("zona");
+            });
+
             modelBuilder.Entity<VContactosInfoGeneral>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasNoKey();
 
                 entity.ToView("vContactosInfoGeneral");
 
@@ -1446,12 +1623,12 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionInfoGeneral>(entity =>
             {
-                entity.HasKey(e => e.NumeroCotizacion);
+                entity.HasNoKey();
 
                 entity.ToView("vCotizacionInfoGeneral");
 
                 entity.Property(e => e.Asesor)
-                    .HasMaxLength(30)
+                    .HasMaxLength(92)
                     .IsUnicode(false)
                     .HasColumnName("asesor");
 
@@ -1532,9 +1709,81 @@ namespace CRM.Models
                     .HasColumnName("zona");
             });
 
+            modelBuilder.Entity<VCotizacionesConMasActividadesTarea>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCotizacionesConMasActividadesTareas");
+
+                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
+
+                entity.Property(e => e.TotalTareasActividades).HasColumnName("total_tareas_actividades");
+            });
+
+            modelBuilder.Entity<VCotizacionesPorDepartamento>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCotizacionesPorDepartamento");
+
+                entity.Property(e => e.Departamento)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("departamento");
+
+                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
+            });
+
+            modelBuilder.Entity<VCotizacionesValorPresentePorAnno>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCotizacionesValorPresentePorAnno");
+
+                entity.Property(e => e.MontoCotizaciones).HasColumnName("Monto_cotizaciones");
+            });
+
+            modelBuilder.Entity<VCotizacionesValorPresentePorMe>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vCotizacionesValorPresentePorMes");
+
+                entity.Property(e => e.Mes)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MontoCotizaciones).HasColumnName("Monto_cotizaciones");
+            });
+
+            modelBuilder.Entity<VFamiliaProductosVendido>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vFamiliaProductosVendidos");
+
+                entity.Property(e => e.Familia)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VPorcentajeVentasPorDepartamento>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vPorcentajeVentasPorDepartamento");
+
+                entity.Property(e => e.Departamento)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("departamento");
+
+                entity.Property(e => e.PorcentajeDeVentas).HasColumnName("porcentaje_de_ventas");
+            });
+
             modelBuilder.Entity<VProductosInfoGeneral>(entity =>
             {
-                entity.HasKey(e => e.Codigo);
+                entity.HasNoKey();
 
                 entity.ToView("vProductosInfoGeneral");
 
@@ -1563,10 +1812,195 @@ namespace CRM.Models
                 entity.Property(e => e.PrecioEstandar).HasColumnName("precio_estandar");
             });
 
+            modelBuilder.Entity<VProductosMasCotizado>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vProductosMasCotizados");
+
+                entity.Property(e => e.CantidadCotizaciones).HasColumnName("cantidad_cotizaciones");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+            });
+
+            modelBuilder.Entity<VProductosXcotizacion>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vProductosXcotizacion");
+
+                entity.Property(e => e.Codigo).HasColumnName("codigo");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Familia)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
+
+                entity.Property(e => e.PrecioEstandar).HasColumnName("precio_estandar");
+            });
+
+            modelBuilder.Entity<VTotalContactoClientesPorUsuario>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vTotalContactoClientesPorUsuario");
+
+                entity.Property(e => e.Cedula)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("cedula");
+
+                entity.Property(e => e.ContactosDeCliente).HasColumnName("contactos_de_cliente");
+
+                entity.Property(e => e.Usuario)
+                    .HasMaxLength(92)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VTotalEjecucionesConCierre>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vTotalEjecucionesConCierre");
+            });
+
+            modelBuilder.Entity<VVenta>(entity =>
+            {
+                entity.HasKey(e => e.FechaCierre);
+
+                entity.ToView("vVentas");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.FechaCierre)
+                    .HasColumnType("date")
+                    .HasColumnName("fecha_cierre");
+
+                entity.Property(e => e.FechaCotizacion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("fecha_cotizacion");
+
+                entity.Property(e => e.FechaProyeccionCierre)
+                    .HasColumnType("date")
+                    .HasColumnName("fecha_proyeccion_cierre");
+
+                entity.Property(e => e.IdAsesor)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("id_asesor");
+
+                entity.Property(e => e.IdCompetidor)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("id_competidor");
+
+                entity.Property(e => e.IdContacto).HasColumnName("id_contacto");
+
+                entity.Property(e => e.IdEtapa)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("id_etapa");
+
+                entity.Property(e => e.IdFactura).HasColumnName("id_factura");
+
+                entity.Property(e => e.IdMoneda).HasColumnName("id_moneda");
+
+                entity.Property(e => e.IdSector).HasColumnName("id_sector");
+
+                entity.Property(e => e.IdZona).HasColumnName("id_zona");
+
+                entity.Property(e => e.MotivoDenegacion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("motivo_denegacion");
+
+                entity.Property(e => e.NombreCuenta)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre_cuenta");
+
+                entity.Property(e => e.NombreOportunidad)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre_oportunidad");
+
+                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
+
+                entity.Property(e => e.OrdenCompra)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("orden_compra");
+
+                entity.Property(e => e.Probabilidad).HasColumnName("probabilidad");
+
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo");
+            });
+
+            modelBuilder.Entity<VVentasPorZona>(entity =>
+            {
+                entity.HasKey(e => e.Descripcion);
+
+                entity.ToView("vVentasPorZona");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Monto).HasColumnName("monto");
+            });
+
+            modelBuilder.Entity<VVentasValorPresentePorAnno>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vVentasValorPresentePorAnno");
+
+                entity.Property(e => e.MontoVentas).HasColumnName("Monto_Ventas");
+            });
+
+            modelBuilder.Entity<VVentasValorPresentePorMe>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vVentasValorPresentePorMes");
+
+                entity.Property(e => e.Mes)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MontoVentas).HasColumnName("Monto_ventas");
+            });
+
             modelBuilder.Entity<ValorPresenteCotizacione>(entity =>
             {
                 entity.HasKey(e => e.NumeroCotizacion)
-                    .HasName("PK__ValorPre__9FB24E0E84B743B5");
+                    .HasName("PK__ValorPre__9FB24E0EE0B1375C");
 
                 entity.Property(e => e.NumeroCotizacion)
                     .ValueGeneratedNever()
@@ -1589,15 +2023,9 @@ namespace CRM.Models
 
                 entity.Property(e => e.NumeroContacto).HasColumnName("numero_contacto");
 
-                entity.Property(e => e.TotalAValorPresente)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("total_a_valor_presente");
+                entity.Property(e => e.TotalAValorPresente).HasColumnName("total_a_valor_presente");
 
-                entity.Property(e => e.TotalCotizacion)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("total_cotizacion");
+                entity.Property(e => e.TotalCotizacion).HasColumnName("total_cotizacion");
 
                 entity.HasOne(d => d.NumeroCotizacionNavigation)
                     .WithOne(p => p.ValorPresenteCotizacione)

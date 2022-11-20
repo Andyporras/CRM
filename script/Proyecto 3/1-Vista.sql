@@ -196,7 +196,7 @@ Cotizaciones y Ventas por departamento. Comparativo. Gráfico de barras. se debe
 */
 DROP VIEW IF EXISTS vCotizacionYVentasDepartamento
 GO
-CREATE VIEW CotizacionYVentasDepartamento AS
+CREATE VIEW vCotizacionYVentasDepartamento AS
 SELECT d.nombre AS Departamento, COUNT(cd.departamento) AS Cotizaciones, COUNT(VD.departamento) AS Ventas
 FROM Departamento d
 LEFT JOIN vCantidadCotizacionesPorDepartamento CD ON d.nombre = CD.departamento
@@ -207,14 +207,16 @@ GO
 /*
 Ventas y cotizaciones por mes. Gráfico de barras.
 */
+/*
 DROP VIEW IF EXISTS vVentasYCotizavionPorMes
 GO
 CREATE VIEW vVentasYCotizavionPorMes AS
 SELECT MONTH(v.fecha_cotizacion) AS Mes, COUNT(v.fecha_cierre) AS Ventas, COUNT(c.numero_cotizacion) AS Cotizaciones
 FROM vVentas v
 FULL JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion
-GROUP BY MONTH(v.fecha_cierre)
+--GROUP BY MONTH(v.fecha_cierre)
 GO
+*/
 
 /*
 Ventas y cotizaciones por año. Gráfico de barras.
@@ -302,5 +304,3 @@ FROM vTareasEstadoTarea t
 WHERE t.estado != 3
 ORDER BY t.fecha_creacion ASC
 GO
-
-select *from vTop15TareasSinCerrarMasAntiguias

@@ -7,7 +7,6 @@ using System.Web;
 using CRM.Models;
 using System.Data.SqlClient;
 using System.Data;
-using CRM.Models;
 using Microsoft.Data.SqlClient;
 
 namespace CRM.Logica

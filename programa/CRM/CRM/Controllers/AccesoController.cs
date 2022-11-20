@@ -7,7 +7,6 @@ using System.Web;
 
 using CRM.Models;
 //using System.Web.security;
-using CRM.Models;
 using CRM.Logica;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;

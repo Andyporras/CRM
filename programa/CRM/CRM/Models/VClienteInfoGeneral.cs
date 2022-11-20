@@ -11,5 +11,15 @@ namespace CRM.Models
         public string Nombre { get; set; } = null!;
         public string Apellido1 { get; set; } = null!;
         public string Apellido2 { get; set; } = null!;
+        public string Zona { get; internal set; }
+        public string SitioWeb { get; internal set; }
+        public string CedulaCliente { get; internal set; }
+        public string ContactoPrincipal { get; internal set; }
+        public string CorreoElectronico { get; internal set; }
+        public string Id { get; internal set; }
+        public string InformacionAdicional { get; internal set; }
+        public string Moneda { get; internal set; }
+        public string NombreCuenta { get; internal set; }
+        public string Sector { get; internal set; }
     }
 }

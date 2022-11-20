@@ -22,5 +22,6 @@ namespace CRM.Models
         public virtual Monedum MonedaNavigation { get; set; } = null!;
         public virtual Contacto? Contacto { get; set; }
         public virtual Cotizacion? Cotizacion { get; set; }
+        public ICollection<Contacto> Contactos { get; internal set; }
     }
 }

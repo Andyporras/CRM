@@ -12,7 +12,7 @@ namespace CRM.Models
             IdActividads = new HashSet<Actividad>();
             IdTareas = new HashSet<Tarea>();
         }
-
+        
         public int Id { get; set; }
         public int? NumeroCotizacion { get; set; }
         public string? Asesor { get; set; }

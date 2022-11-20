@@ -48,7 +48,7 @@ namespace CRM.Models
 
         [Display(Name = "Cédula del cliente")]
         public virtual CuentaCliente CedulaCliente1 { get; set; } = null!;
-        public virtual Cliente CedulaClienteNavigation { get; set; } = null!;
+        public virtual Cliente? CedulaClienteNavigation { get; set; } = null!;
 
         [Display(Name = "Cédula de asesor/a")]
         public virtual Usuario? CedulaUsuarioNavigation { get; set; }
