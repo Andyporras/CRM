@@ -2,7 +2,112 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1></h1>
+
+@*create a table 11x11*@
+
+@for (int i = 1; i <= 1; i++)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Consultas
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">📊 Familias de productos más vendidos</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VProductosMasCotizados" asp-action="Index">🔝 Productos más cotizados</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VVentasPorZonas" asp-action="Index">📊 Ventas por zonas</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Index">📊 Valor presente de cotizaciones</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VTotalContactoClientesPorUsuario" asp-action="Index">Total de contactos cliente por usuario</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VTotalEjecucionesConCierre" asp-action="Index">Total de ejecuciones con cierre</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VCotizacionesConMasActividadesTareas" asp-action="Index">🔝 Cotizaciones con más actividades y tareas</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VCantidadCotizacionesPorTipo" asp-action="Index">📊 Cantidad de cotizaciones por tipo</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VCasosPorTipo" asp-action="Index">📊 Casos por tipo</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VPorcentajeVentasPorDepartamentos" asp-action="Index"> 📊 Porcentaje de ventas por departamento</a>
+                </td>
+                @*ANDY SIGUES ACÁ ABAJO*@
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-controller="VFamiliaProductosVendidos" asp-action="Index">Nombre de la consulta</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
