@@ -5,7 +5,7 @@ namespace CRM.Models
 {
     public partial class VFamiliaProductosVendido
     {
-        public string Familia { get; set; } = null!;
+        public string? Familia { get; set; }
         public double? Monto { get; set; }
     }
 }

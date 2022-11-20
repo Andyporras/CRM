@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CRM.Models.VProductosMasCotizado>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Productos más cotizados</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadCotizaciones)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadCotizaciones)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

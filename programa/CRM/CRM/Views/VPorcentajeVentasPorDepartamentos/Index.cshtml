@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CRM.Models.VPorcentajeVentasPorDepartamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Porcentaje de ventas por deparatamento</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PorcentajeDeVentas)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PorcentajeDeVentas)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

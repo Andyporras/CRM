@@ -1405,7 +1405,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCantidadCotizacionesPorTipo>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Nombre);
 
                 entity.ToView("vCantidadCotizacionesPorTipo");
 
@@ -1433,7 +1433,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCasosPorTipo>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Tipo);
 
                 entity.ToView("vCasosPorTipo");
 
@@ -1711,7 +1711,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionesConMasActividadesTarea>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.NumeroCotizacion);
 
                 entity.ToView("vCotizacionesConMasActividadesTareas");
 
@@ -1736,7 +1736,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionesValorPresentePorAnno>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.MontoCotizaciones);
 
                 entity.ToView("vCotizacionesValorPresentePorAnno");
 
@@ -1745,7 +1745,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionesValorPresentePorMe>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Mes);
 
                 entity.ToView("vCotizacionesValorPresentePorMes");
 
@@ -1758,8 +1758,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VFamiliaProductosVendido>(entity =>
             {
-                entity.HasNoKey();
-
+                entity.HasKey(e => e.Familia);
                 entity.ToView("vFamiliaProductosVendidos");
 
                 entity.Property(e => e.Familia)
@@ -1769,7 +1768,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VPorcentajeVentasPorDepartamento>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Departamento);
 
                 entity.ToView("vPorcentajeVentasPorDepartamento");
 
@@ -1814,7 +1813,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VProductosMasCotizado>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Descripcion);
 
                 entity.ToView("vProductosMasCotizados");
 
@@ -1859,7 +1858,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VTotalContactoClientesPorUsuario>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Cedula);
 
                 entity.ToView("vTotalContactoClientesPorUsuario");
 
@@ -1877,7 +1876,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VTotalEjecucionesConCierre>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Total);
 
                 entity.ToView("vTotalEjecucionesConCierre");
             });
