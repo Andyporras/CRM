@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CRM.Models.VTotalContactoClientesPorUsuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cantidad de contactos cliente por usuario</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactosDeCliente)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactosDeCliente)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

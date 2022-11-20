@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CRM.Models.VCasosPorTipo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Casos por tipo</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Porcentaje)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Porcentaje)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

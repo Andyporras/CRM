@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CRM.Models.VCotizacionesConMasActividadesTarea>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cotizaciones con más actividades</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalTareasActividades)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalTareasActividades)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
