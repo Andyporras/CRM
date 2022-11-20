@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRM.Models;
+using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
@@ -25,21 +26,29 @@ namespace CRM.Controllers
         }
 
         // GET: VFamiliaProductosVendidos/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
-            if (id == null || _context.VFamiliaProductosVendidos == null)
+            var pInicio = new SqlParameter
             {
-                return NotFound();
-            }
-
-            var vFamiliaProductosVendido = await _context.VFamiliaProductosVendidos
-                .FirstOrDefaultAsync(m => m.Familia == id);
-            if (vFamiliaProductosVendido == null)
+                ParameterName = "fechaInicio",
+                Value = inicio,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
+            var pFinal = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "fechaFin",
+                Value = fin,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
 
-            return View(vFamiliaProductosVendido);
+            //Ejecucion de procedimiento almacenado
+            //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
+            var productos =  (IEnumerable<VFamiliaProductosVendido>) _context
+                .VFamiliaProductosVendidos
+                .FromSqlInterpolated($"SELECT * FROM dbo.fFamiliaProductosVendidos ({pInicio}, {pFinal})")
+                .ToList();
+            
+            return View("index", productos);
         }
     }
 }
