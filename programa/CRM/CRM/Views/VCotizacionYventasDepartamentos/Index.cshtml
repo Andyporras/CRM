@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CRM.Models.VCotizacionYventasDepartamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cotizacion y ventas por departamentos</h1>
+
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCotizacionYventasDepartamentos" asp-action="Filtrar">Filtrar</button>
+    </form>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ventas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cotizaciones)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ventas)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cotizaciones)
+        </tr>
+}
+    </tbody>
+</table>

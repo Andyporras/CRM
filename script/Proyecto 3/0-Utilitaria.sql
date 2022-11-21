@@ -4,6 +4,7 @@ Este archivo contiene múltiples vistas y funciones que son de utilidad para los
 USE CRM
 GO
 
+select *from Usuario
 
 -- Función que obtiene las ventas que han sido realizadas
 DROP VIEW IF EXISTS vVentas

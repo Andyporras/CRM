@@ -17,17 +17,17 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-        <button class="btn btn-success" id="form-btn" asp-controller="VProductoMasVendidos" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VProductosMasVendidos" asp-action="Filtrar">Filtrar</button>
     </form>
 </div>
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            <th>
                 @Html.DisplayNameFor(model => model.Monto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th></th>
         </tr>
@@ -36,10 +36,12 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            <td>
-                ₡ @Html.DisplayFor(modelItem => item.Monto)
+                @Html.DisplayFor(modelItem => item.Monto)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+             </td>
+                
         </tr>
 }
     </tbody>

@@ -10,22 +10,22 @@ using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
-    public class VProductosMasVendidosController : Controller
+    public class VCotizacionYventasDepartamentosController : Controller
     {
         private readonly CRMContext _context;
 
-        public VProductosMasVendidosController(CRMContext context)
+        public VCotizacionYventasDepartamentosController(CRMContext context)
         {
             _context = context;
         }
 
-        // GET: VProductosMasVendidos
+        // GET: VCotizacionYventasDepartamentos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.VProductosMasVendidos.ToListAsync());
+              return View(await _context.VCotizacionYventasDepartamentos.ToListAsync());
         }
 
-        // GET: VProductosMasVendidos/Details/5
+        // GET: VCotizacionYventasDepartamentos/Details/5
         public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
             var pInicio = new SqlParameter
@@ -43,12 +43,13 @@ namespace CRM.Controllers
 
             //Ejecucion de procedimiento almacenado
             //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
-            var productos = (IEnumerable<VProductosMasVendido>)_context
-                .VProductosMasVendidos
-                .FromSqlInterpolated($"SELECT * FROM dbo.fProductosMasVendidos ({pInicio}, {pFinal})")
+            var productos = (IEnumerable<VCotizacionYventasDepartamento>)_context
+                .VCotizacionYventasDepartamentos
+                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionYVentasDepartamento ({pInicio}, {pFinal})")
                 .ToList();
 
             return View("index", productos);
         }
+
     }
 }
