@@ -21,6 +21,8 @@
     </form>
 </div>
 
+<div id="chart_div"></div>
+
 
 <table class="table">
     <thead>
@@ -35,6 +37,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+            <script>
+                elements.push(["@item.Nombre", @item.Cantidad]);
+            </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -46,3 +51,14 @@
 }
     </tbody>
 </table>
+
+
+@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+    title = 'Cantidad de cotizaciones por tipo';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Nombre"]);
+    columns.push(["number", "Cantidad"]);
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>

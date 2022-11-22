@@ -2,7 +2,6 @@ using CRM.Controllers;
 using CRM.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using CRM.Models.ViewModelsTest;
 
 var builder = WebApplication.CreateBuilder(args);
 

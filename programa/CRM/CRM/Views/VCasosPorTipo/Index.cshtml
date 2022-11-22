@@ -19,6 +19,9 @@
         <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorTipo" asp-action="Filtrar">Filtrar</button>
         <button class="btn btn-secondary" id="form-btn" asp-controller="VCasosPorTipo" asp-action="Index">Quitar filtro</button>
     </form>
+</div>
+
+<div id="chart_div"></div>
 
 <table class="table">
     <thead>
@@ -33,6 +36,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        <script>
+            elements.push(["@item.Tipo", @item.Porcentaje]);
+        </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Tipo)
@@ -44,3 +50,16 @@
 }
     </tbody>
 </table>
+
+
+
+    @*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+    title = 'Casos por tipo';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Tipo"]);
+    columns.push(["number", "Porcentaje"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>

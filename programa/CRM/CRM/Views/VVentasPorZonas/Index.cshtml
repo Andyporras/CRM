@@ -19,6 +19,8 @@
         <button class="btn btn-success" id="form-btn" asp-controller="VVentasPorZonas" asp-action="Filtrar">Filtrar</button>
     </form>
 </div>
+
+<div id="chart_div"></div>
         
 <table class="table">
     <thead>
@@ -32,6 +34,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+            <script>
+                elements.push(["@item.Descripcion", @item.Monto]);
+            </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
@@ -42,3 +47,15 @@
 }
     </tbody>
 </table>
+
+
+@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+    title = 'Ventas por zona';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Descripción"]);
+    columns.push(["number", "Monto"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>

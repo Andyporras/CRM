@@ -19,6 +19,8 @@
     </form>
 </div>
 
+<div id="chart_div"></div>
+
 <table class="table">
     <thead>
         <tr>
@@ -35,6 +37,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+            <script>
+                elements.push(["@item.Mes", @item.Cotizaciones, @item.Ventas]);
+            </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Cotizaciones)
@@ -50,3 +55,15 @@
 }
     </tbody>
 </table>
+
+
+@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+    title = 'Tareas y ventas por cotización';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Departamento"]);
+    columns.push(["number", "Porcentaje"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>
