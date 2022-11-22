@@ -6,7 +6,6 @@
 
 <h1>Familias de productos vendidos</h1>
 
-
 <div class="container">
     <form class="form" method="POST">
         <div>
@@ -21,6 +20,9 @@
     </form>
 </div>
 
+<div id="chart_div">
+    
+</div>
 
 <table class="table">
     <thead>
@@ -35,6 +37,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        <script>
+                elements.push(["@item.Familia",@item.Monto]);
+        </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Familia)
@@ -46,3 +51,14 @@
 }
     </tbody>
 </table>
+
+@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+        title = 'Familias de productos vendidos';
+        width = 600;
+        height = 600;
+        columns.push(["string","Familia"]);
+        columns.push(["number","Monto"]);
+        //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+        google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>
