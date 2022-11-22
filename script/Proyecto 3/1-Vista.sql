@@ -219,23 +219,25 @@ GO
 /*
 Ventas y cotizaciones por mes. Gráfico de barras.
 */
-/*
-DROP VIEW IF EXISTS vVentasYCotizavionPorMes
+
+DROP VIEW IF EXISTS vVentasYCotizacionPorMes
 GO
-CREATE VIEW vVentasYCotizavionPorMes AS
-SELECT MONTH(v.fecha_cotizacion) AS Mes, COUNT(v.fecha_cierre) AS Ventas, COUNT(c.numero_cotizacion) AS Cotizaciones
+CREATE VIEW vVentasYCotizacionPorMes AS
+SELECT COUNT(C.numero_cotizacion) AS Cotizaciones, COUNT(v.numero_cotizacion) AS Ventas, month(v.fecha_cotizacion) AS Mes
 FROM vVentas v
-FULL JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion
---GROUP BY MONTH(v.fecha_cierre)
+inner JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion
+GROUP BY v.numero_cotizacion  , c.numero_cotizacion, MONTH(v.fecha_cotizacion)
 GO
-*/
+--select *from Cotizacion
+
+--select *from vVentasYCotizacionPorMes
 
 /*
 Ventas y cotizaciones por año. Gráfico de barras.
 */
-DROP VIEW IF EXISTS vVentasYCotizavionPorAño
+DROP VIEW IF EXISTS vVentasYCotizacionPorAño
 GO
-CREATE VIEW vVentasYCotizavionPorAño AS
+CREATE VIEW vVentasYCotizacionPorAño AS
 SELECT YEAR(v.fecha_cierre) AS Año, COUNT(v.fecha_cierre) AS Ventas, COUNT(c.numero_cotizacion) AS Cotizaciones
 FROM vVentas v
 FULL JOIN Cotizacion c ON v.numero_cotizacion = c.numero_cotizacion

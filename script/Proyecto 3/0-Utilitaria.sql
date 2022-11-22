@@ -4,6 +4,7 @@ Este archivo contiene múltiples vistas y funciones que son de utilidad para los
 USE CRM
 GO
 
+select *from Usuario
 
 -- Función que obtiene las ventas que han sido realizadas
 DROP VIEW IF EXISTS vVentas
@@ -74,16 +75,54 @@ BEGIN
 END
 GO
 
--- Vista que retorna las cotizaciones y el departamento encargado
+-- Vista que retorna todas los atributos de una cotización y el departamento al que pertenece
+DROP VIEW IF EXISTS vCotizacionDepartamento
+GO
+CREATE VIEW vCotizacionDepartamento AS
+	SELECT coti.numero_cotizacion, coti.id_etapa, coti.probabilidad, coti.fecha_cotizacion, coti.fecha_cierre, dep.id as idDepartamento, dep.nombre
+		FROM Cotizacion coti, Departamento dep	
+			INNER JOIN Usuario usu ON dep.id = usu.id_departamento
+				WHERE coti.id_asesor = usu.cedula
+GO
+
+-- Vista que retorna todas los atributos de una venta y el departamento al que pertenece
+DROP VIEW IF EXISTS vVentaDepartamento
+GO
+CREATE VIEW vVentaDepartamento AS
+	SELECT coti.numero_cotizacion, coti.id_etapa, coti.probabilidad, coti.fecha_cotizacion, coti.fecha_cierre, dep.id as idDepartamento, dep.nombre
+		FROM Cotizacion coti, Departamento dep	
+			INNER JOIN Usuario usu ON dep.id = usu.id_departamento
+				WHERE coti.id_asesor = usu.cedula AND (coti.id_etapa = 'Facturada' OR coti.probabilidad = 100)
+GO
+	
+select *from vVentaDepartamento
+
+/*			
+GO
 DROP VIEW IF EXISTS vCotizacionesPorDepartamento
 GO
 CREATE VIEW vCotizacionesPorDepartamento AS
-	SELECT coti.numero_cotizacion, dep.nombre AS departamento
-	FROM Cotizacion coti
-		INNER JOIN Usuario u ON u.cedula = coti.id_asesor
-		INNER JOIN Departamento dep ON dep.id = u.id_departamento
-	GROUP BY coti.numero_cotizacion, dep.nombre
+	SELECT coti.numero_cotizacion, dep.nombre AS departamento, dep.id AS id_departamento
+		FROM Cotizacion coti, Departamento dep	
+			INNER JOIN Usuario usu ON dep.id = usu.id_departamento
+				WHERE coti.id_asesor = usu.id
 GO
+*/
+
+-- Vista que retorna las ventas y el departamento encargado
+/*
+DROP VIEW IF EXISTS vVentasPorDepartamento
+GO
+CREATE VIEW vVentasPorDepartamento AS
+	SELECT coti.numero_cotizacion, dep.nombre AS departamento, dep.id AS id_departamento
+		FROM Cotizacion coti, Departamento dep	
+			INNER JOIN Usuario usu ON dep.id = usu.id_departamento
+				WHERE id_etapa = 'Facturada' OR probabilidad = 100
+GO
+*/
+
+select *from vCotizacionesPorDepartamento
+select *from vVentasPorDepartamento
 
 -- Vista que retorna la cantidad de cotizaciones que ha tenido cada departamento
 DROP VIEW IF EXISTS vCantidadCotizacionesPorDepartamento

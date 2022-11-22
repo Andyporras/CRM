@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CRM.Models.VTop10VendedoresMayorVenta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VTop10VendedoresMayorVenta" asp-action="Filtrar">Filtrar</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Monto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <th> </th>
+        </tr>
+}
+    </tbody>
+</table>
