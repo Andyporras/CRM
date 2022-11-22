@@ -15,7 +15,7 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-        <button class="btn btn-success" id="form-btn" asp-controller="VProductosMasVendidos" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VVentasYcotizacionPorMes" asp-action="Filtrar">Filtrar</button>
     </form>
 </div>
 
@@ -44,7 +44,8 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mes)
-            </td>   
+            </td> 
+            
         </tr>
 }
     </tbody>

@@ -256,17 +256,16 @@ CREATE FUNCTION fCotizacionYVentasDepartamento(@fechaInicio DATE, @fechaFin DATE
 RETURNS TABLE
 AS
 RETURN (
-	SELECT dep.nombre AS departamento, COUNT(dep.nombre) AS cantidad
-	FROM vVentas coti
-		INNER JOIN Usuario u ON u.cedula = coti.id_asesor
-		INNER JOIN Departamento dep ON dep.id = u.id_departamento
-		WHERE coti.fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
-	GROUP BY dep.nombre
+	SELECT d.nombre AS Departamento,
+		(SELECT COUNT(*) FROM vCotizacionDepartamento c WHERE c.idDepartamento = d.id AND c.fecha_cotizacion >= @fechaInicio AND c.fecha_cierre <= @fechaFin) AS Cotizaciones,
+		(SELECT COUNT(*) FROM vVentaDepartamento v WHERE v.idDepartamento = d.id AND v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin) AS Ventas
+	FROM Departamento d
 )
 GO
 
 /*
 Función que filtra por rango de fecha las/el Ventas y cotizaciones por mes. Gráfico de barras.
+Devuelve el Cotizaciones y Ventas por mes. Comparativo. Gráfico de barras.
 */
 DROP FUNCTION IF EXISTS fVentasYCotizacionPorMes
 GO
@@ -274,9 +273,11 @@ CREATE FUNCTION fVentasYCotizacionPorMes(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
-	SELECT MONTH(fecha_cierre) AS mes, COUNT(MONTH(fecha_cierre)) AS cantidad
-	FROM vVentas
-		WHERE fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
+	SELECT MONTH(fecha_cierre) AS Mes,
+		(SELECT COUNT(*) FROM vCotizacionDepartamento c WHERE MONTH(c.fecha_cotizacion) = MONTH(v.fecha_cierre) AND c.fecha_cotizacion >= @fechaInicio AND c.fecha_cierre <= @fechaFin) AS Cotizaciones,
+		(SELECT COUNT(*) FROM vVentaDepartamento v WHERE MONTH(v.fecha_cierre) = MONTH(v.fecha_cierre) AND v.fecha_cierre >= @fechaInicio AND v.fecha_cierre <= @fechaFin) AS Ventas
+	FROM vVentaDepartamento v
+	WHERE fecha_cierre >= @fechaInicio AND fecha_cierre <= @fechaFin
 	GROUP BY MONTH(fecha_cierre)
 )
 GO
@@ -392,3 +393,10 @@ RETURN (
 )
 GO
 
+select *from vCotizacionYVentasDepartamento
+SELECT * FROM dbo.fCotizacionYVentasDepartamento ('','')
+
+SELECT * FROM dbo.VVentasYCotizacionPorMes 
+SELECT * FROM dbo.fVentasYCotizacionPorMes ('','')
+
+select *from  vTop10ClientesMayorVentas
