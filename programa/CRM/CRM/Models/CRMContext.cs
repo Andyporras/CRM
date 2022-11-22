@@ -1752,7 +1752,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionYventasDepartamento>(entity =>
             {
-                entity.HasKey(e => e.Cotizaciones);
+                entity.HasKey(e => e.Departamento);
 
                 entity.ToView("vCotizacionYventasDepartamento");
 
@@ -2098,16 +2098,13 @@ namespace CRM.Models
 
             modelBuilder.Entity<VVentasPorSector>(entity =>
             {
-                entity.HasKey(e => e.Monto);
+                entity.HasKey(e => e.Descripcion);
 
                 entity.ToView("vVentasPorSector");
 
                 entity.Property(e => e.Monto).HasColumnName("monto");
 
-                entity.Property(e => e.Descripcion)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("descripcion");
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion");
 
 
             });

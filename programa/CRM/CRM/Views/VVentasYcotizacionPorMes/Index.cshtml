@@ -59,11 +59,12 @@
 
 @*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
 <script>
-    title = 'Tareas y ventas por cotización';
-    width = 600;
+    title = "Ventas y cotizaciones por mes";
+    width = 800;
     height = 600;
-    columns.push(["string", "Departamento"]);
-    columns.push(["number", "Porcentaje"]);
-    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
-    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+    columns.push(["string", "Mes"]);
+    columns.push(["number", "Cotizaciones"]);
+    columns.push(["number", "Ventas"]);
+    google.charts.setOnLoadCallback(barChart);
 </script>
+    

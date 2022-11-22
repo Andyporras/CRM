@@ -1,10 +1,10 @@
-﻿@model IEnumerable<CRM.Models.VFamiliaProductosVendido>
+﻿@model IEnumerable<CRM.Models.VVentasPorSector>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Familias de productos vendidos</h1>
+<h1>Ventas por sector</h1>
 
 <div class="container">
     <form class="form" method="POST">
@@ -16,7 +16,7 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-            <button class="btn btn-success" id="form-btn" asp-controller="VFamiliaProductosVendidos" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VVentasPorSector" asp-action="Filtrar">Filtrar</button>
     </form>
 </div>
 
@@ -28,7 +28,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Familia)
+                @Html.DisplayNameFor(model => model.Descripcion)
             </th><th>
                 @Html.DisplayNameFor(model => model.Monto)
             </th>
@@ -38,11 +38,11 @@
     <tbody>
 @foreach (var item in Model) {
         <script>
-                elements.push(["@item.Familia",@item.Monto]);
+              elements.push(["@item.Descripcion", @item.Monto]);
         </script>
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Familia)
+                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
                 ₡ @Html.DisplayFor(modelItem => item.Monto)
@@ -54,11 +54,12 @@
 
 @*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
 <script>
-        title = 'Familias de productos vendidos';
-        width = 600;
-        height = 600;
-        columns.push(["string","Familia"]);
-        columns.push(["number","Monto"]);
-        //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
-        google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+    title = 'Ventas por sector';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Descripcion"]);
+    columns.push(["number", "Monto"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart); // circular
+    //google.charts.setOnLoadCallback(barChart); // barras
 </script>
