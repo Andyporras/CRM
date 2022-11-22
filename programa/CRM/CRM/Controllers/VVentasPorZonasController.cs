@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRM.Models;
+using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
@@ -24,22 +25,29 @@ namespace CRM.Controllers
               return View(await _context.VVentasPorZonas.ToListAsync());
         }
 
-        // GET: VVentasPorZonas/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
-            if (id == null || _context.VVentasPorZonas == null)
+            var pInicio = new SqlParameter
             {
-                return NotFound();
-            }
-
-            var vVentasPorZona = await _context.VVentasPorZonas
-                .FirstOrDefaultAsync(m => m.Descripcion == id);
-            if (vVentasPorZona == null)
+                ParameterName = "fechaInicio",
+                Value = inicio,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
+            var pFinal = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "fechaFin",
+                Value = fin,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
 
-            return View(vVentasPorZona);
+            //Ejecucion de procedimiento almacenado
+            //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
+            var productos = (IEnumerable<VVentasPorZona>)_context
+                .VVentasPorZonas
+                .FromSqlInterpolated($"SELECT * FROM dbo.fVentasPorZona ({pInicio}, {pFinal})")
+                .ToList();
+
+            return View("index", productos);
         }
     }
 }

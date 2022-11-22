@@ -201,5 +201,3 @@ SELECT t.id, t.descripcion, t.fecha_creacion, t.fecha_finalizacion,t.estado, et.
 FROM Tarea t
 INNER JOIN EstadoTarea et ON t.estado = et.id
 GO
-
-select *from vTareasEstadoTarea

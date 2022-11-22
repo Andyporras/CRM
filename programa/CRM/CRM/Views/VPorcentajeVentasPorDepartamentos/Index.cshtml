@@ -4,7 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Porcentaje de ventas por deparatamento</h1>
+<h1>Porcentaje de ventas por departamento</h1>
+
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+            <button class="btn btn-success" id="form-btn" asp-controller="VPorcentajeVentasPorDepartamentos" asp-action="Filtrar">Filtrar</button>
+    </form>
+</div>
+
 
 <table class="table">
     <thead>
@@ -24,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Departamento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PorcentajeDeVentas)
+                @Html.DisplayFor(modelItem => item.PorcentajeDeVentas) %
             </td>
         </tr>
 }

@@ -25,7 +25,7 @@ namespace CRM.Controllers
               return View(await _context.VFamiliaProductosVendidos.ToListAsync());
         }
 
-        // GET: VFamiliaProductosVendidos/Details/5
+
         public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
             var pInicio = new SqlParameter

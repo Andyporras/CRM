@@ -115,9 +115,21 @@ Cantidad de Ejecuciones con cierre por mes, por año.
 DROP VIEW IF EXISTS vTotalEjecucionesConCierre
 GO
 CREATE VIEW vTotalEjecucionesConCierre AS
-     SELECT COUNT(*) as Total FROM Ejecucion
-		WHERE fechaCierre < GETDATE()
+		select mes.nombre as mes, COUNT(*) as cantidad
+		from Ejecucion e, mes
+		where mes.id = MONTH(e.fechaCierre)
+		group by mes.nombre
 GO
+
+
+DROP VIEW IF EXISTS vTotalEjecucionesConCierrePorAnno
+GO
+CREATE VIEW vTotalEjecucionesConCierrePorAnno AS
+		select year(e.fechaCierre) as anno, COUNT(*) as cantidad
+		from Ejecucion e
+		group by year(e.fechaCierre)
+GO
+
 
 
 /*

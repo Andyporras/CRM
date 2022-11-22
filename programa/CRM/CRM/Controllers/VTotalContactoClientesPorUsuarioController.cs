@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRM.Models;
+using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
@@ -24,22 +25,6 @@ namespace CRM.Controllers
               return View(await _context.VTotalContactoClientesPorUsuarios.ToListAsync());
         }
 
-        // GET: VTotalContactoClientesPorUsuario/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null || _context.VTotalContactoClientesPorUsuarios == null)
-            {
-                return NotFound();
-            }
-
-            var vTotalContactoClientesPorUsuario = await _context.VTotalContactoClientesPorUsuarios
-                .FirstOrDefaultAsync(m => m.Cedula == id);
-            if (vTotalContactoClientesPorUsuario == null)
-            {
-                return NotFound();
-            }
-
-            return View(vTotalContactoClientesPorUsuario);
-        }
+        //Estado es la clase que no se puede filtrar
     }
 }

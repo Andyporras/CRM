@@ -6,11 +6,41 @@
 
 <h1>Total de ejecuciones con cierre</h1>
 
+<div class="container">
+    <form class="form" method="post">
+        <div>
+            <label>Mes</label>
+            <select name="mes" id="mes">
+                <option value="nada">Selecciona un mes </option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+            </select>
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VTotalEjecucionesConCierre" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VTotalEjecucionesConCierre" asp-action="Index">Quitar filtro</button>
+        <a class="btn btn-secondary" id="form-btn" asp-controller="VTotalEjecucionesConCierrePorAnno" asp-action="Index">Ver por año</a>
+    </form>
+</div>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Total)
+                @Html.DisplayNameFor(model => model.mes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
             </th>
         </tr>
     </thead>
@@ -18,7 +48,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Total)
+                @Html.DisplayFor(modelItem => item.mes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
             </td>
         </tr>
 }

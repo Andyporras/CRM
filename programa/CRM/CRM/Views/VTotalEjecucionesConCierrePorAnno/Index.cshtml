@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CRM.Models.VTotalEjecucionesConCierrePorAnno>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Total de ejecuciones con cierre por año</h1>
+
+<div class="container">
+    <form class="form" method="post">
+        <div>
+            <input type="number" name="anno" id="anno" placeholder="Año" min="2000" max="2022">
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VTotalEjecucionesConCierrePorAnno" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VTotalEjecucionesConCierrePorAnno" asp-action="Index">Quitar filtro</button>
+        <a class="btn btn-secondary" id="form-btn" asp-controller="VTotalEjecucionesConCierre" asp-action="Index">Ver por mes</a>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

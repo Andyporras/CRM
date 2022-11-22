@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CRM.Models
 {
-    public partial class VTotalEjecucionesConCierre
+    public partial class VTotalEjecucionesConCierrePorAnno
     {
-        public string? mes { get; set; }
+        public int? anno { get; set; }
         public int? cantidad { get; set; }
     }
 }

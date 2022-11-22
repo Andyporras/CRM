@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRM.Models;
+using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
@@ -24,22 +25,22 @@ namespace CRM.Controllers
               return View(await _context.VTotalEjecucionesConCierres.ToListAsync());
         }
 
-        // GET: VTotalEjecucionesConCierre/Details/5
-        public async Task<IActionResult> Details(int? id)
+        
+        public async Task<IActionResult> Filtrar(string mes)
         {
-            if (id == null || _context.VTotalEjecucionesConCierres == null)
+            var pInicio = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "mes",
+                Value = mes,
+                SqlDbType = System.Data.SqlDbType.VarChar
+            };
 
-            var vTotalEjecucionesConCierre = await _context.VTotalEjecucionesConCierres
-                .FirstOrDefaultAsync(m => m.Total == id);
-            if (vTotalEjecucionesConCierre == null)
-            {
-                return NotFound();
-            }
+            var productos = (IEnumerable<VTotalEjecucionesConCierre>)_context
+                .VTotalEjecucionesConCierres
+                .FromSqlInterpolated($"SELECT * FROM dbo.fTotalEjecucionesConCierrePorMes ({mes})")
+                .ToList();
 
-            return View(vTotalEjecucionesConCierre);
+            return View("index", productos);
         }
     }
 }

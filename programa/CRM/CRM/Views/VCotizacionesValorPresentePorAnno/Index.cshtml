@@ -6,6 +6,34 @@
 
 <h1>Cotizaciones valor presente por año</h1>
 
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Año</label>
+            <input type="number" id="inicio" name="inicio" value="" min="2000" max="2022"/>
+        </div>
+        <div>
+            <label>Mes</label>
+            <select name="mes" id="mes">
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+            </select>
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Index">Quitar filtros</button>
+    </form>
+</div>
+
 <table class="table">
     <thead>
         <tr>

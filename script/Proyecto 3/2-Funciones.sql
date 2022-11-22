@@ -3,6 +3,35 @@ GO
 
 -- Milton 👇🏻
 
+
+
+-- Funcion que filtre las ejecuciones con cierre por mes
+DROP FUNCTION IF EXISTS fTotalEjecucionesConCierrePorMes
+GO
+CREATE FUNCTION fTotalEjecucionesConCierrePorMes (@mes VARCHAR(20))
+RETURNS TABLE
+AS
+RETURN
+(
+		SELECT * from vTotalEjecucionesConCierre
+		where mes = @mes
+)
+GO
+
+
+--funcion que filtra las ejecucione scon cierre por año
+DROP FUNCTION IF EXISTS fTotalEjecucionesConCierrePorAnno
+GO
+CREATE FUNCTION fTotalEjecucionesConCierrePorAnno (@anno INT)
+RETURNS TABLE
+AS
+RETURN
+(
+		SELECT * from vTotalEjecucionesConCierrePorAnno
+		where @anno = anno
+)
+GO
+
 -- Funcion que filtre las familias de productos vendidos por fecha
 DROP FUNCTION IF EXISTS fFamiliaProductosVendidos
 GO
@@ -52,7 +81,7 @@ RETURN (
 		SELECT ve.descripcion, (SELECT dbo.fMontoCotizacion(ve.numero_cotizacion)) AS monto
 		FROM vVentas ve, zona zo
 			WHERE ve.id_zona = zo.id AND
-				 (ve.fecha_cierre >= @fechaInicio OR ve.fecha_cierre <= @fechaFin)
+				 (ve.fecha_cierre >= @fechaInicio AND ve.fecha_cierre <= @fechaFin)
 		)
 GO
 
@@ -66,7 +95,7 @@ RETURNS TABLE
 AS
 	RETURN (
 			SELECT dep.nombre AS departamento, (COUNT(dep.nombre) * 100 / (
-			SELECT COUNT(*) FROM vVentas)) AS porcentaje
+			SELECT COUNT(*) FROM vVentas)) AS porcentaje_de_ventas
 			FROM vVentas coti
 				INNER JOIN Usuario u ON u.cedula = coti.id_asesor
 				INNER JOIN Departamento dep ON dep.id = u.id_departamento
@@ -103,6 +132,7 @@ RETURN (
 		WHERE ve.Mes = @mes
 )
 GO
+
 
 -- Función que filtra las cotizaciones con valor presente por año específico
 DROP FUNCTION IF EXISTS fCotizacionesValorPresentePorAnno

@@ -73,6 +73,7 @@ namespace CRM.Models
         public virtual DbSet<VProductosXcotizacion> VProductosXcotizacions { get; set; } = null!;
         public virtual DbSet<VTotalContactoClientesPorUsuario> VTotalContactoClientesPorUsuarios { get; set; } = null!;
         public virtual DbSet<VTotalEjecucionesConCierre> VTotalEjecucionesConCierres { get; set; } = null!;
+        public virtual DbSet<VTotalEjecucionesConCierrePorAnno> VTotalEjecucionesConCierresPorAnno { get; set; } = null!;
         public virtual DbSet<VVenta> VVentas { get; set; } = null!;
         public virtual DbSet<VVentasPorZona> VVentasPorZonas { get; set; } = null!;
         public virtual DbSet<VVentasValorPresentePorAnno> VVentasValorPresentePorAnnos { get; set; } = null!;
@@ -1876,9 +1877,35 @@ namespace CRM.Models
 
             modelBuilder.Entity<VTotalEjecucionesConCierre>(entity =>
             {
-                entity.HasKey(e => e.Total);
+                entity.HasKey(e => e.mes);
 
                 entity.ToView("vTotalEjecucionesConCierre");
+
+                entity.Property(e => e.cantidad)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("cantidad");
+                entity.Property(e => e.mes)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("mes");
+                
+            });
+            modelBuilder.Entity<VTotalEjecucionesConCierrePorAnno>(entity =>
+            {
+                entity.HasKey(e => e.anno);
+
+                entity.ToView("vTotalEjecucionesConCierrePorAnno");
+
+                entity.Property(e => e.cantidad)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("cantidad");
+                entity.Property(e => e.anno)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("anno");
+                
             });
 
             modelBuilder.Entity<VVenta>(entity =>

@@ -5,7 +5,21 @@
 }
 
 <h1>Cantidad de contactos cliente por usuario</h1>
-
+@* ES LA CLASE QUE NO SE PUEDE FILTRAR
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+            <button class="btn btn-success" id="form-btn" asp-controller="VTotalContactoClientesPorUsuario" asp-action="Filtrar">Filtrar</button>
+    </form>
+</div>
+*@
 <table class="table">
     <thead>
         <tr>

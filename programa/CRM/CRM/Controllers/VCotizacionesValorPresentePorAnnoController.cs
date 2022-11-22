@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRM.Models;
+using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
@@ -24,22 +25,29 @@ namespace CRM.Controllers
               return View(await _context.VCotizacionesValorPresentePorAnnos.ToListAsync());
         }
 
-        // GET: VCotizacionesValorPresentePorAnno/Details/5
-        public async Task<IActionResult> Details(double? id)
+        public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
-            if (id == null || _context.VCotizacionesValorPresentePorAnnos == null)
+            var pInicio = new SqlParameter
             {
-                return NotFound();
-            }
-
-            var vCotizacionesValorPresentePorAnno = await _context.VCotizacionesValorPresentePorAnnos
-                .FirstOrDefaultAsync(m => m.MontoCotizaciones == id);
-            if (vCotizacionesValorPresentePorAnno == null)
+                ParameterName = "fechaInicio",
+                Value = inicio,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
+            var pFinal = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "fechaFin",
+                Value = fin,
+                SqlDbType = System.Data.SqlDbType.Date
+            };
 
-            return View(vCotizacionesValorPresentePorAnno);
+            //Ejecucion de procedimiento almacenado
+            //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
+            var productos = (IEnumerable<VCotizacionesValorPresentePorAnno>)_context
+                .VCotizacionesValorPresentePorAnnos
+                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionesValorPresentePorAnno ({pInicio}, {pFinal})")
+                .ToList();
+
+            return View("index", productos);
         }
     }
 }

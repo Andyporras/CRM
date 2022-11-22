@@ -6,6 +6,20 @@
 
 <h1>Casos por tipo</h1>
 
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorTipo" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCasosPorTipo" asp-action="Index">Quitar filtro</button>
+    </form>
+
 <table class="table">
     <thead>
         <tr>
