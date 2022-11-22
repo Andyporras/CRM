@@ -268,9 +268,9 @@ GO
 /*
 Función que filtra por rango de fecha las/el Ventas y cotizaciones por mes. Gráfico de barras.
 */
-DROP FUNCTION IF EXISTS fVentasYCotizavionPorMes
+DROP FUNCTION IF EXISTS fVentasYCotizacionPorMes
 GO
-CREATE FUNCTION fVentasYCotizavionPorMes(@fechaInicio DATE, @fechaFin DATE)
+CREATE FUNCTION fVentasYCotizacionPorMes(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
