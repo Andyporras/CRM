@@ -1963,6 +1963,22 @@ namespace CRM.Models
                 entity.Property(e => e.Monto).HasColumnName("Monto");
             });
 
+            modelBuilder.Entity<VTop15TareasSinCerrarMasAntiguia>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToView("vTop15TareasSinCerrarMasAntiguias");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion");
+
+                entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion");
+
+                entity.Property(e => e.NombreEstadoTarea).HasColumnName("NombreEstadoTarea");
+
+            });
+
 
             modelBuilder.Entity<VTotalContactoClientesPorUsuario>(entity =>
             {
