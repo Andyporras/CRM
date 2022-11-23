@@ -24,15 +24,18 @@
 <div id="chart_div"></div>
 
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "Nombre","sortOrder":"desc"},{"sortName":"Cantidad","sortOrder":"desc"}]'
+       >
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
+            <th data-field="Nombre" data-sortable="true">Nombre</th>
+            <th data-field="Cantidad" data-sortable="true">Cantidad</th>
         </tr>
     </thead>
     <tbody>
