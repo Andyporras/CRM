@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CRM.Models.VTop10CotizacionDiferenciaMasAlto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Top 10 cotizaciones con mayor diferencia</h1>
+
+
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VTop10CotizacionDiferenciaMasAlto" asp-action="Filtrar">Filtrar</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diferencia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diferencia)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
