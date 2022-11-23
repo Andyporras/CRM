@@ -16,40 +16,43 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-        <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorEstado" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorEstadoes" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCasosPorEstadoes" asp-action="Index">Quitar filtro</button>
     </form>
 </div>
 
 <div id="chart_div">
 </div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "Cantidad","sortOrder":"desc"},{"sortName":"Estado","sortOrder":"desc"}]'>
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
+            <th data-field="Id" data-sortable="true">Cantidad</th>
+            <th data-field="Descripcion" data-sortable="true">Estado</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
             <script>
                 elements.push(["@item.Estado", @item.Cantidad]);
             </script>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td></td>
-        </tr>
-}
+                </td>
+                <td></td>
+            </tr>
+        }
     </tbody>
 </table>
 

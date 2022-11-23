@@ -10,21 +10,22 @@ using Microsoft.Data.SqlClient;
 
 namespace CRM.Controllers
 {
-    public class VProductosMasCotizadosController : Controller
+    public class VTop15TareasSinCerrarMasAntiguiaController : Controller
     {
         private readonly CRMContext _context;
 
-        public VProductosMasCotizadosController(CRMContext context)
+        public VTop15TareasSinCerrarMasAntiguiaController(CRMContext context)
         {
             _context = context;
         }
 
-        // GET: VProductosMasCotizados
+        // GET: VTop15TareasSinCerrarMasAntiguia
         public async Task<IActionResult> Index()
         {
-              return View(await _context.VProductosMasCotizados.ToListAsync());
+              return View(await _context.VTop15TareasSinCerrarMasAntiguias.ToListAsync());
         }
 
+        // GET: VTop15TareasSinCerrarMasAntiguia/Filtrar/5
         public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
         {
             var pInicio = new SqlParameter
@@ -42,13 +43,12 @@ namespace CRM.Controllers
 
             //Ejecucion de procedimiento almacenado
             //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
-            var productos = (IEnumerable<VProductosMasCotizado>)_context
-                .VProductosMasCotizados
-                .FromSqlInterpolated($"SELECT * FROM dbo.fProductosMasCotizados ({pInicio}, {pFinal})")
+            var tareas = (IEnumerable<VTop15TareasSinCerrarMasAntiguia>)_context
+                .VTop15TareasSinCerrarMasAntiguias
+                .FromSqlInterpolated($"SELECT * FROM dbo.fTop15TareasSinCerrarMasAntiguias ({pInicio}, {pFinal})")
                 .ToList();
 
-            return View("index", productos);
+            return View("index", tareas);
         }
-        
     }
 }

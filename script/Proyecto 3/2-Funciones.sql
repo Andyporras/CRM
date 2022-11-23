@@ -416,8 +416,8 @@ CREATE FUNCTION fTop15TareasSinCerrarMasAntiguias(@fechaInicio DATE, @fechaFin D
 RETURNS TABLE
 AS
 RETURN (
-	SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion
-	FROM Tarea t
+	SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion AS FechaCreacion, t.nombre_estado_tarea AS NombreEstadoTarea
+	FROM vTareasEstadoTarea t
 		WHERE t.fecha_finalizacion IS NULL AND t.fecha_creacion >= @fechaInicio AND t.fecha_finalizacion <= @fechaFin
 	ORDER BY t.fecha_creacion ASC
 )
@@ -431,7 +431,7 @@ SELECT * FROM dbo.fVentasYCotizacionPorMes ('','')
 
 select *from  vTop10ClientesMayorVentas
 select *from vCotizacionYVentasDepartamento
-select *from vCantidadClientesPorZonaYMonto
+select *from vTop15TareasSinCerrarMasAntiguias
 
 SELECT *FROM fCasosPorEstado ('','')
 select *from fCantidadClientesPorZonaYmonto ('','')

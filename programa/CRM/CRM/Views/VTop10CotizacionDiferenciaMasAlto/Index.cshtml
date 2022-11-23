@@ -18,21 +18,22 @@
             <input type="date" id="fin" name="fin" />
         </div>
         <button class="btn btn-success" id="form-btn" asp-controller="VTop10CotizacionDiferenciaMasAlto" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VTop10CotizacionDiferenciaMasAlto" asp-action="Index">Quitar filtro</button>
     </form>
 </div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "NumeroCotizacion","sortOrder":"desc"},{"sortName":"Nombre","sortOrder":"desc"},{"sortName":"Diferencia","sortOrder":"desc"}]'>
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCotizacion)
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diferencia)
-            </th>
-            <th></th>
+            <th data-field="Diferencia" data-sortable="true">Diferencia</th>
+            <th data-field="Nombre" data-sortable="true">Nombre</th>
+            <th data-field="NumeroCotizacion" data-sortable="true">NumeroCotizacion</th>
         </tr>
     </thead>
     <tbody>

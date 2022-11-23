@@ -16,23 +16,24 @@
             <input type="date" id="fin" name="fin" />
         </div>
         <button class="btn btn-success" id="form-btn" asp-controller="VVentasYcotizacionPorMes" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VVentasYcotizacionPorMes" asp-action="Index">Quitar filtro</button>
     </form>
 </div>
 
 <div id="chart_div"></div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "Mes","sortOrder":"desc"},{"sortName":"Ventas","sortOrder":"desc"},{"sortName":"Cotizaciones","sortOrder":"desc"}]'>
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cotizaciones)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ventas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mes)
-            <th></th>
+            <th data-field="Mes" data-sortable="true">Mes</th>
+            <th data-field="Ventas" data-sortable="true">Ventas</th>
+            <th data-field="Cotizaciones" data-sortable="true">Cotizaciones</th>
         </tr>
     </thead>
     <tbody>

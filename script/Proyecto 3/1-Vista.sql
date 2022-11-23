@@ -312,7 +312,7 @@ Top 15 de tareas sin cerrar más antiguas.
 DROP VIEW IF EXISTS vTop15TareasSinCerrarMasAntiguias
 GO
 CREATE VIEW vTop15TareasSinCerrarMasAntiguias AS
-SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion, t.nombre_estado_tarea
+SELECT TOP 15 t.id, t.descripcion, t.fecha_creacion as FechaCreacion, t.nombre_estado_tarea as NombreEstadoTarea
 FROM vTareasEstadoTarea t
 WHERE t.estado != 3
 ORDER BY t.fecha_creacion ASC

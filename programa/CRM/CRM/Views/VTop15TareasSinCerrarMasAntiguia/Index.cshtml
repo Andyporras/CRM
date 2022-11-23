@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CRM.Models.VTop15TareasSinCerrarMasAntiguia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Top 15 tareas sin cerrar mas antiguas </h1>
+
+<div class="container">
+    <form class="form" method="POST">
+        <div>
+            <label>Fecha inicio</label>
+            <input type="date" id="inicio" name="inicio" />
+        </div>
+        <div>
+            <label>Fecha fin</label>
+            <input type="date" id="fin" name="fin" />
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VTop15TareasSinCerrarMasAntiguia" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VTop15TareasSinCerrarMasAntiguia" asp-action="Index">Quitar filtro</button>
+        </form>
+</div>
+
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "ID","sortOrder":"desc"},{"sortName":"Descripcion","sortOrder":"desc"},{"sortName":"FechaCreacion","sortOrder":"desc"},{"sortName":"NombreEstadoTarea","sortOrder":"desc"}]'>
+       <thead>
+        <tr>
+            <th data-field="Id" data-sortable="true">Id</th>
+            <th data-field="Descripcion" data-sortable="true">Descripcion</th>
+            <th data-field="FechaCreacion" data-sortable="true">FechaCreacion</th>
+            <th data-field="NombreEstadoTarea" data-sortable="true">NombreEstadoTarea</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreEstadoTarea)
+            </td>
+            <td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -17,22 +17,22 @@
             <input type="date" id="fin" name="fin" />
         </div>
         <button class="btn btn-success" id="form-btn" asp-controller="VCantidadClientesPorZonaYmonto" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCantidadClientesPorZonaYmonto" asp-action="Index">Quitar filtro</button>
     </form>
 </div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "Monto","sortOrder":"desc"},{"sortName":"Cantidad","sortOrder":"desc"},{"sortName":"Zona","sortOrder":"desc"}]'>
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Monto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zona)
-            </th>
-            <th></th>
+            <th data-field="Monto" data-sortable="true">Monto</th>
+            <th data-field="Cantidad" data-sortable="true">Cantidad</th>
+            <th data-field="Zona" data-sortable="true">Zona</th>
         </tr>
     </thead>
     <tbody>
