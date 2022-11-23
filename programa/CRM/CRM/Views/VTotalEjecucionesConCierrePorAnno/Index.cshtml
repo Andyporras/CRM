@@ -17,13 +17,19 @@
     </form>
 </div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true">
     <thead>
         <tr>
-            <th>
+            <th data-field="anno" data-sortable="true">
                 @Html.DisplayNameFor(model => model.anno)
             </th>
-            <th>
+            <th data-field="cantidad" data-sortable="true">
                 @Html.DisplayNameFor(model => model.cantidad)
             </th>
         </tr>

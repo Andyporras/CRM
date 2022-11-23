@@ -24,15 +24,22 @@
     
 </div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true"
+    >
     <thead>
         <tr>
-            <th>
+            <th data-field="Familia" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Familia)
-            </th><th>
-                @Html.DisplayNameFor(model => model.Monto)
             </th>
-            <th></th>
+            <th data-field="Monto" data-sortable="true">
+                @Html.DisplayNameFor(model => model.Monto) 
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Familia)
             </td>
             <td>
-                ₡ @Html.DisplayFor(modelItem => item.Monto)
+                @Html.DisplayFor(modelItem => item.Monto)
             </td>
         </tr>
 }

@@ -23,13 +23,19 @@
 
 <div id="chart_div"></div>
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true">
     <thead>
         <tr>
-            <th>
+            <th data-field="Tipo" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
-            <th>
+            <th data-field="Porcentaje" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Porcentaje)
             </th>
         </tr>

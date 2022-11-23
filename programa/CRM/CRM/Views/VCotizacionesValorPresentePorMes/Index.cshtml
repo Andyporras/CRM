@@ -6,19 +6,56 @@
 
 <h1>Cotizaciones valor presente por mes</h1>
 
-<table class="table">
+<div class="container">
+    <form class="form" method="post">
+        <div>
+            <label>Mes</label>
+            <select name="mes" id="mes">
+                <option value="nada">Selecciona un mes </option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+            </select>
+        </div>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCotizacionesValorPresentePorMes" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorMes" asp-action="Index">Quitar filtro</button>
+        <a class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Index">Ver por año</a>
+    </form>
+</div>
+
+<div id="chart_div"></div>
+
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true">
     <thead>
         <tr>
-            <th>
+            <th data-field="Mes" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Mes)
             </th>
-            <th>
+            <th data-field="MontoCotizaciones" data-sortable="true">
                 @Html.DisplayNameFor(model => model.MontoCotizaciones)
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        <script>
+                elements.push(["@item.Mes", @item.MontoCotizaciones]);
+        </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Mes)
@@ -30,3 +67,14 @@
 }
     </tbody>
 </table>
+
+
+<script>
+    title = 'Cotizaciones valor presente por mes';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Mes"]);
+    columns.push(["number", "Monto de cotizaciones"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>

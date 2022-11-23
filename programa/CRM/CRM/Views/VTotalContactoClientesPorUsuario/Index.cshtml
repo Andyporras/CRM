@@ -20,16 +20,23 @@
     </form>
 </div>
 *@
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true"
+    >
     <thead>
         <tr>
-            <th>
+            <th data-field="Cedula" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Cedula)
             </th>
-            <th>
+            <th data-field="Usuario" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Usuario)
             </th>
-            <th>
+            <th data-field="ContactosDeCliente" data-sortable="true">
                 @Html.DisplayNameFor(model => model.ContactosDeCliente)
             </th>
         </tr>

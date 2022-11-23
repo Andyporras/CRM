@@ -7,46 +7,40 @@
 <h1>Cotizaciones valor presente por año</h1>
 
 <div class="container">
-    <form class="form" method="POST">
+    <form class="form" method="post">
         <div>
-            <label>Año</label>
-            <input type="number" id="inicio" name="inicio" value="" min="2000" max="2022"/>
-        </div>
-        <div>
-            <label>Mes</label>
-            <select name="mes" id="mes">
-                <option value="Enero">Enero</option>
-                <option value="Febrero">Febrero</option>
-                <option value="Marzo">Marzo</option>
-                <option value="Abril">Abril</option>
-                <option value="Mayo">Mayo</option>
-                <option value="Junio">Junio</option>
-                <option value="Julio">Julio</option>
-                <option value="Agosto">Agosto</option>
-                <option value="Septiembre">Septiembre</option>
-                <option value="Octubre">Octubre</option>
-                <option value="Noviembre">Noviembre</option>
-                <option value="Diciembre">Diciembre</option>
-            </select>
+            <input type="number" name="anno" id="anno" placeholder="Año" min="2000" max="2022">
         </div>
         <button class="btn btn-success" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Filtrar">Filtrar</button>
-        <button class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Index">Quitar filtros</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorAnno" asp-action="Index">Quitar filtro</button>
+        <a class="btn btn-secondary" id="form-btn" asp-controller="VCotizacionesValorPresentePorMes" asp-action="Index">Ver por mes</a>
     </form>
 </div>
 
-<table class="table">
+<div id="chart_div"></div>
+
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true">
     <thead>
         <tr>
-            <th>
+            <th data-field="Año" data-sortable="true">
                 @Html.DisplayNameFor(model => model.Año)
             </th>
-            <th>
+            <th data-field="MontoCotizaciones" data-sortable="true">
                 @Html.DisplayNameFor(model => model.MontoCotizaciones)
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        <script>
+                elements.push(["@item.Año", @item.MontoCotizaciones]);
+        </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Año)
@@ -58,3 +52,13 @@
 }
     </tbody>
 </table>
+
+<script>
+    title = 'Cotizaciones valor presente por año';
+    width = 600;
+    height = 600;
+    columns.push(["string", "Año"]);
+    columns.push(["number", "Monto de cotizaciones"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
+    google.charts.setOnLoadCallback(pieChart);//esto es para que se genere el gráfico cuando se ha terminado de cargar la página
+</script>

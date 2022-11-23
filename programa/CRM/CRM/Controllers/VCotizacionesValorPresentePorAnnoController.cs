@@ -25,26 +25,20 @@ namespace CRM.Controllers
               return View(await _context.VCotizacionesValorPresentePorAnnos.ToListAsync());
         }
 
-        public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
+        public async Task<IActionResult> Filtrar(int anno)
         {
-            var pInicio = new SqlParameter
+            var pAnno = new SqlParameter
             {
-                ParameterName = "fechaInicio",
-                Value = inicio,
-                SqlDbType = System.Data.SqlDbType.Date
-            };
-            var pFinal = new SqlParameter
-            {
-                ParameterName = "fechaFin",
-                Value = fin,
-                SqlDbType = System.Data.SqlDbType.Date
+                ParameterName = "anno",
+                Value = anno,
+                SqlDbType = System.Data.SqlDbType.Int
             };
 
             //Ejecucion de procedimiento almacenado
             //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
             var productos = (IEnumerable<VCotizacionesValorPresentePorAnno>)_context
                 .VCotizacionesValorPresentePorAnnos
-                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionesValorPresentePorAnno ({pInicio}, {pFinal})")
+                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionesValorPresentePorAnno ({pAnno})")
                 .ToList();
 
             return View("index", productos);

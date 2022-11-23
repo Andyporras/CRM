@@ -22,13 +22,19 @@
 </div>
 
 
-<table class="table">
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-pagination="true">
     <thead>
         <tr>
-            <th>
+            <th data-field="NumeroCotizacion" data-sortable="true">
                 @Html.DisplayNameFor(model => model.NumeroCotizacion)
             </th>
-            <th>
+            <th data-field="TotalTareasActividades" data-sortable="true">
                 @Html.DisplayNameFor(model => model.TotalTareasActividades)
             </th>
         </tr>
@@ -37,7 +43,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                @*<a class="btn btn-secondary" id="form-btn" asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion">*@
+                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                @*</a>*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalTareasActividades)

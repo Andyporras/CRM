@@ -25,26 +25,20 @@ namespace CRM.Controllers
               return View(await _context.VCotizacionesValorPresentePorMes.ToListAsync());
         }
 
-        public async Task<IActionResult> Filtrar(DateTime inicio, DateTime fin)
+        public async Task<IActionResult> Filtrar(string mes)
         {
-            var pInicio = new SqlParameter
+            var pMes = new SqlParameter
             {
                 ParameterName = "fechaInicio",
-                Value = inicio,
-                SqlDbType = System.Data.SqlDbType.Date
-            };
-            var pFinal = new SqlParameter
-            {
-                ParameterName = "fechaFin",
-                Value = fin,
-                SqlDbType = System.Data.SqlDbType.Date
+                Value = mes,
+                SqlDbType = System.Data.SqlDbType.VarChar
             };
 
             //Ejecucion de procedimiento almacenado
             //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
             var productos = (IEnumerable<VCotizacionesValorPresentePorMe>)_context
                 .VCotizacionesValorPresentePorMes
-                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionesValorPresentePorMes ({pInicio}, {pFinal})")
+                .FromSqlInterpolated($"SELECT * FROM dbo.fCotizacionesValorPresentePorMes ({pMes})")
                 .ToList();
 
             return View("index", productos);
