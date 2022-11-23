@@ -17,24 +17,23 @@
             <input type="date" id="fin" name="fin" />
         </div>
         <button class="btn btn-success" id="form-btn" asp-controller="VTop15TareasSinCerrarMasAntiguia" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-secondary" id="form-btn" asp-controller="VTop15TareasSinCerrarMasAntiguia" asp-action="Index">Quitar filtro</button>
         </form>
 </div>
 
-<table class="table">
-    <thead>
+<table class="table th-inner sortable both"
+       id="table"
+       data-toggle="table"
+       data-search="false"
+       data-show-columns="false"
+       data-show-multi-sort="true"
+       data-sort-priority='[{"sortName": "ID","sortOrder":"desc"},{"sortName":"Descripcion","sortOrder":"desc"},{"sortName":"FechaCreacion","sortOrder":"desc"},{"sortName":"NombreEstadoTarea","sortOrder":"desc"}]'>
+       <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreEstadoTarea)
-            </th>
-            <th></th>
+            <th data-field="Id" data-sortable="true">Id</th>
+            <th data-field="Descripcion" data-sortable="true">Descripcion</th>
+            <th data-field="FechaCreacion" data-sortable="true">FechaCreacion</th>
+            <th data-field="NombreEstadoTarea" data-sortable="true">NombreEstadoTarea</th>
         </tr>
     </thead>
     <tbody>
