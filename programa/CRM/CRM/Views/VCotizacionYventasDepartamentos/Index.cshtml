@@ -20,6 +20,9 @@
     </form>
 </div>
 
+<div id="chart_div">
+    
+</div>
 
 <table class="table">
     <thead>
@@ -37,6 +40,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        <script>
+                elements.push(["@item.Departamento", @item.Ventas, @item.Cotizaciones]);
+        </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Departamento)
@@ -50,3 +56,14 @@
 }
     </tbody>
 </table>
+
+@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
+<script>
+        title = 'Cotizacion y ventas por departamentos';
+        width = 1000;
+        height = 600;
+        columns.push(["string", "Departamento"]);
+        columns.push(["number", "Ventas"]);
+        columns.push(["number", "Cotizaciones"]);
+        google.charts.setOnLoadCallback(barChart);
+</script>

@@ -1,10 +1,10 @@
-﻿@model IEnumerable<CRM.Models.VCasosPorEstado>
+﻿@model IEnumerable<CRM.Models.VCantidadClientesPorZonaYmonto>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Casos por estado</h1>
+<h1>Cantidad de clientes por zona y monto</h1>
 
 <div class="container">
     <form class="form" method="POST">
@@ -16,11 +16,8 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-        <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorEstado" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VCantidadClientesPorZonaYmonto" asp-action="Filtrar">Filtrar</button>
     </form>
-</div>
-
-<div id="chart_div">
 </div>
 
 <table class="table">
@@ -30,35 +27,29 @@
                 @Html.DisplayNameFor(model => model.Cantidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Estado)
+                @Html.DisplayNameFor(model => model.Monto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zona)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-            <script>
-                elements.push(["@item.Estado", @item.Cantidad]);
-            </script>
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Cantidad)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
+                @Html.DisplayFor(modelItem => item.Monto)
             </td>
-            <td></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zona)
+                </td>
+            <td>
+            </td>
         </tr>
 }
     </tbody>
 </table>
-
-@*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
-<script>
-    title = 'Casos por estado';
-    width = 600;
-    height = 600;
-    columns.push(["string", "Estado"]);
-    columns.push(["number", "Cantidad"]);
-    google.charts.setOnLoadCallback(pieChart); // circular
-</script>

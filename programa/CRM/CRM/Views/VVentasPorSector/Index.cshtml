@@ -1,10 +1,10 @@
-﻿@model IEnumerable<CRM.Models.VCasosPorEstado>
+﻿@model IEnumerable<CRM.Models.VVentasPorSector>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Casos por estado</h1>
+<h1>Ventas por sector</h1>
 
 <div class="container">
     <form class="form" method="POST">
@@ -16,38 +16,37 @@
             <label>Fecha fin</label>
             <input type="date" id="fin" name="fin" />
         </div>
-        <button class="btn btn-success" id="form-btn" asp-controller="VCasosPorEstado" asp-action="Filtrar">Filtrar</button>
+        <button class="btn btn-success" id="form-btn" asp-controller="VVentasPorSector" asp-action="Filtrar">Filtrar</button>
     </form>
 </div>
 
 <div id="chart_div">
+    
 </div>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th><th>
+                @Html.DisplayNameFor(model => model.Monto)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-            <script>
-                elements.push(["@item.Estado", @item.Cantidad]);
-            </script>
+        <script>
+              elements.push(["@item.Descripcion", @item.Monto]);
+        </script>
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
+                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
+                ₡ @Html.DisplayFor(modelItem => item.Monto)
             </td>
-            <td></td>
         </tr>
 }
     </tbody>
@@ -55,10 +54,12 @@
 
 @*se indican el titulo, las dimensiones y las columnas que tendrá el grafico*@
 <script>
-    title = 'Casos por estado';
+    title = 'Ventas por sector';
     width = 600;
     height = 600;
-    columns.push(["string", "Estado"]);
-    columns.push(["number", "Cantidad"]);
+    columns.push(["string", "Descripcion"]);
+    columns.push(["number", "Monto"]);
+    //chart = new google.visualization.PieChart(document.getElementById('chart_div'))
     google.charts.setOnLoadCallback(pieChart); // circular
+    //google.charts.setOnLoadCallback(barChart); // barras
 </script>
