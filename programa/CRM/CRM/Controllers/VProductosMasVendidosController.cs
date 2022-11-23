@@ -41,8 +41,7 @@ namespace CRM.Controllers
                 SqlDbType = System.Data.SqlDbType.Date
             };
 
-            //Ejecucion de procedimiento almacenado
-            //var sql = "EXECUTE procBuscarCliente @cedula, @ret OUT";
+            //Ejecucion de funcion
             var productos = (IEnumerable<VProductosMasVendido>)_context
                 .VProductosMasVendidos
                 .FromSqlInterpolated($"SELECT * FROM dbo.fProductosMasVendidos ({pInicio}, {pFinal})")

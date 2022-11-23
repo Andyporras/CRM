@@ -121,9 +121,6 @@ CREATE VIEW vVentasPorDepartamento AS
 GO
 */
 
-select *from vCotizacionesPorDepartamento
-select *from vVentasPorDepartamento
-
 -- Vista que retorna la cantidad de cotizaciones que ha tenido cada departamento
 DROP VIEW IF EXISTS vCantidadCotizacionesPorDepartamento
 GO

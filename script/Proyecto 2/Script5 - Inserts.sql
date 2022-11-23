@@ -1519,10 +1519,10 @@ motivo_denegacion de los existente, id_competidor de los existente, id_cuenta_cl
 -- @maxElement int, @random1 int, @randomRol int
 DECLARE @randomContacto int, @randomCuenta VARCHAR(30), @randomZona int,
 @randomSector int, @randomEtapa VARCHAR(30), @randomMoneda int, @randomAsesor int, @randomProbabilidad int,
-@randomMotivo int, @randomCompetidor VARCHAR(30), @randomTipoCotizacion VARCHAR(50)
+@randomMotivo int, @randomCompetidor VARCHAR(30), @randomTipoCotizacion VARCHAR(50), @randomAño int, @randomMes int, @randomDia int
 
 SET @maxElement = 1;
-WHILE @maxElement < 15
+WHILE @maxElement < 14
 BEGIN
   SELECT TOP 1 @randomContacto = id FROM Contacto ORDER BY NEWID();
   SELECT TOP 1 @randomCuenta = nombre_cuenta FROM CuentaCliente ORDER BY NEWID();
@@ -1536,14 +1536,17 @@ BEGIN
   SELECT TOP 1 @randomCompetidor = nombre FROM Competidor ORDER BY NEWID();
   SELECT TOP 1 @randomTipoCotizacion = id FROM tipoCotizacion ORDER BY NEWID();
   SELECT @random1 = 1 + RAND() * 100;
+  SELECT @randomAño = 2000 + RAND() * 10;
+  SELECT @randomMes = 1 + RAND() * 12;
+  SELECT @randomDia = 1 + RAND() * 30;
   IF NOT (SELECT COUNT(*) FROM Cotizacion WHERE id_factura = @random1 or nombre_cuenta = @randomCuenta) > 0
   BEGIN
     INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
-    VALUES (@maxElement,@random1, @randomContacto, @randomTipoCotizacion, 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);    
+    VALUES (@maxElement,@random1, @randomContacto, @randomTipoCotizacion, 'Oportunidad de prueba',CAST(@randomAño AS varchar)+'-'+CAST(@randomMes AS varchar)+'-'+CAST(@randomDia AS varchar), @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);    
 	SET @maxElement = @maxElement + 1;
   END
 END
-
+--select *from Cotizacion
 
 --SELECT  * FROM ValorPresenteCotizaciones
 /* Insercciones de Ejecucion con id, numeroCotizacion, asesor, fechaEjecucion, nombreCuenta,
