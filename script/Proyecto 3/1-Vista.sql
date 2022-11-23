@@ -275,9 +275,9 @@ GO
 DROP VIEW IF EXISTS vCasosPorEstado
 GO
 CREATE VIEW vCasosPorEstado AS
-SELECT e.nombre, COUNT(c.id_estado) AS Cantidad
-FROM Estado e
-LEFT JOIN Caso c ON e.id = c.id_estado
+SELECT COUNT(e.id) AS Cantidad, e.nombre AS Estado
+FROM Caso c, Estado e
+WHERE c.id_estado = e.id
 GROUP BY e.nombre
 GO
 

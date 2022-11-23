@@ -362,7 +362,7 @@ CREATE FUNCTION fCasosPorEstado(@fechaInicio DATE, @fechaFin DATE)
 RETURNS TABLE
 AS
 RETURN (
-	SELECT e.nombre, COUNT(e.nombre) AS cantidad
+	SELECT e.nombre as Estado, COUNT(e.nombre) AS cantidad
 	FROM vCasosEjecucion CE
 		INNER JOIN Estado e ON e.id = CE.id_estado
 		WHERE CE.fechaEjecucion >= @fechaInicio AND CE.fechaCierre <= @fechaFin
@@ -379,7 +379,7 @@ CREATE FUNCTION fCantidadClientesPorZonaYMonto(@fechaInicio DATE, @fechaFin DATE
 RETURNS TABLE
 AS
 RETURN (
-	SELECT z.nombre, COUNT(z.nombre) AS cantidad, SUM(p.precio_estandar) AS Monto
+	SELECT z.nombre as Zona, COUNT(z.nombre) AS cantidad, SUM(p.precio_estandar) AS Monto
 	FROM ProductoCotizacion pc
 	INNER JOIN Producto p ON p.codigo = pc.codigo_producto
 	INNER JOIN vVentas v ON v.numero_cotizacion = pc.numero_cotizacion
@@ -430,3 +430,8 @@ SELECT * FROM dbo.VVentasYCotizacionPorMes
 SELECT * FROM dbo.fVentasYCotizacionPorMes ('','')
 
 select *from  vTop10ClientesMayorVentas
+select *from vCotizacionYVentasDepartamento
+select *from vCantidadClientesPorZonaYMonto
+
+SELECT *FROM fCasosPorEstado ('','')
+select *from fCantidadClientesPorZonaYmonto ('','')

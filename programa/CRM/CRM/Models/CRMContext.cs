@@ -1461,11 +1461,11 @@ namespace CRM.Models
             });
             modelBuilder.Entity<VCasosPorEstado>(entity =>
             {
-                entity.HasKey(e => e.Nombre);
+                entity.HasKey(e => e.Estado);
 
                 entity.ToView("vCasosPorEstado");
 
-                entity.Property(e => e.Nombre).HasColumnName("nombre");
+                entity.Property(e => e.Estado).HasColumnName("Estado");
 
                 entity.Property(e => e.Cantidad).HasColumnName("cantidad");
 
@@ -1930,11 +1930,9 @@ namespace CRM.Models
             {
                 entity.HasKey(e => e.Nombre);
 
-                entity.ToView("vTop10ClientesMayorVenta");
+                entity.ToView("vTop10ClientesMayorVentas");
 
-                entity.Property(e => e.Nombre)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
+                entity.Property(e => e.Nombre).HasColumnName("nombre");
 
                 entity.Property(e => e.Monto).HasColumnName("Monto");
             });
