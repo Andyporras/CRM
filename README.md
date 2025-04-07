@@ -34,5 +34,5 @@ Sistema CRM desarrollado para el curso Bases de Datos I del Instituto Tecnológi
 
 2. **Configuración**:
    ```bash
-   git clone https://github.com/tu-usuario/crm-system.git
+   git clone https://github.com/andyporras/crm.git
    cd crm-system
