@@ -23,7 +23,7 @@ Sistema CRM desarrollado para el curso Bases de Datos I del Instituto Tecnológi
 - **Tecnologías clave**:
   - Backend: ASP.NET Core 6, C#
   - Base de datos: SQL Server (procedimientos almacenados, vistas)
-  - Frontend: Razor Pages, HTML5, CSS3, JavaScript
+  - Frontend: Razor Pages, HTML5, CSS3
 
 ## 📦 Instalación
 
